@@ -78,24 +78,26 @@ app.getPlayerStats = (id, pos) => {
     dataType: 'json',
   })
   .then((playerStats) => {
-    const x = playerStats.stats[0].splits[0].stat;
+    const playerStatsList = playerStats.stats[0].splits[0].stat;
     if (pos === 'Goalie') {
-      console.log('goalie')
-      // console.log(pos)
-      app.displayGoalieStats(x);
+      app.displayGoalieStats(playerStatsList);
     }
     else {
-      console.log('other player')
-      // console.log(pos);
-      app.displayPlayerStats(x);
+      app.displayPlayerStats(playerStatsList);
     }
   })
 }
 
 app.displayGoalieStats = (player) => {
   app.addHideClass('.roster-list');
+  console.log(player); 
+  // if goalie display: savePercentage, goalsAgainstAverage, shutouts, wins, games played,
   const playerSavePercentage = $('<p>').text(`Save Percentage: ${player.savePercentage}`);
-  $('.stats').append(playerSavePercentage);
+  const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalAgainstAverage}`);
+  const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
+  const playerWins = $('<p>').text(`Wins: ${player.wins}`);
+  const playerGamesPlayed = $('<p>').text(`Games Played: ${player.games}`);
+  $('.stats').append(playerSavePercentage, playerGoalsAgainstAverage, playerShutouts, playerWins, playerGamesPlayed);
 }
 
 // hide roster list
@@ -104,9 +106,6 @@ app.displayPlayerStats = (player) => {
   // console.log(player);
   app.addHideClass('.roster-list');
 
-  // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts 
-  // player  game winning goals, plusMinus 
-  
   const playerAssists = $('<p>').text(`assists: ${player.assists}`);
   const playerGoals = $('<p>').text(`goals: ${player.goals}`);
   const playerPoints = $('<p>').text(`points: ${player.points}`);
