@@ -133,3 +133,6 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
 
 html {
   background: cornflowerblue; }
+
+.hide {
+  display: none; }
