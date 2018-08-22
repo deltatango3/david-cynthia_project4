@@ -6,6 +6,7 @@ app.teamRosterURL = 'roster';
 app.playerURL = 'people';
 app.recentStatsURL = 'stats?stats=statsSingleSeason&season=20172018';
 
+// make an ajax call to return nhl teams then app.displayTeam is called with data.teams as the argument
 app.getData = () => {
   $.ajax({
     url: app.apiURL + app.teamURL,
@@ -17,15 +18,22 @@ app.getData = () => {
   })
 }
 
+// loop through each team
+// create a variable, teamName that has: 
+// - li tag with the attribute of data-id and the value team.id
+// - class of team-name 
+// - the li contains text, team.name
 app.displayTeam = (teams) => {
-  console.log(teams);
+  // console.log(teams);
   teams.forEach((team) => {
     const teamName = $('<li>').attr('data-id', team.id).addClass('team-name').text(team.name);
     $('.teams ul').append(teamName);
   })
 } 
 
-//When I click a team, load the roster for that team. I need to get and store the ID from the data-id when I click the team.
+// When I click a team, load the roster for that team. I need to get and store the ID from the data-id when I click the team.
+// make an ajax call to grab the roster information of the specific team
+// pass data (player names) to displayTeamRoster
 app.getTeamRoster = (id) => {
   // console.log(id);
   $.ajax({
@@ -34,23 +42,35 @@ app.getTeamRoster = (id) => {
     dataType: 'json',
   })
   .then((teamRoster) => {
+    // console.log(teamRoster);
     app.displayTeamRoster(teamRoster.roster);
   })
 }
 
+// loop through the team roster
+// create a list item and adding a class of player-info and attribute data-id with the player's id
+// display player name in a p tag
+// display jersey number
+// display position code add attribute of data-pos to verify if player is goalie
+// create displayed data as children to .roster-list
+// hide team names
 app.displayTeamRoster = (roster) => {
   // console.log(roster);
   roster.forEach((players) => {
-    const playerInfo = $('<li>').addClass('player-info').attr('data-id', players.person.id);
+    const playerInfo = $('<li>').addClass('player-info').attr('data-id', players.person.id)
+    .attr('data-pos', players.position.name);
     const playerName = $('<p>').text(players.person.fullName);
     const playerNumber = $('<span>').text(players.jerseyNumber);
-    playerInfo.append(playerNumber, playerName);
+    const playerPosition = $('<p>').attr("data-pos", players.position.name).text(players.position.code);
+    playerInfo.append(playerNumber, playerName, playerPosition);
     $('.roster-list').append(playerInfo);
   })
   app.addHideClass('.teams');
 }
 
-app.getPlayerStats = (id) => {
+// grab non-goalie player data
+// display player stats
+app.getPlayerStats = (id, pos) => {
   // console.log(id);
   $.ajax({
     url: `${app.apiURL + app.playerURL}/${id}/${app.recentStatsURL}`,
@@ -58,20 +78,42 @@ app.getPlayerStats = (id) => {
     dataType: 'json',
   })
   .then((playerStats) => {
-    // console.log(playerStats);
-    app.displayPlayerStats(playerStats.stats[0].splits[0].stat);
+    const x = playerStats.stats[0].splits[0].stat;
+    if (pos === 'Goalie') {
+      console.log('goalie')
+      // console.log(pos)
+      app.displayGoalieStats(x);
+    }
+    else {
+      console.log('other player')
+      // console.log(pos);
+      app.displayPlayerStats(x);
+    }
   })
 }
-// Need to consider goalie
-app.displayPlayerStats = (player) => {
-  console.log(player);
-  const newStat = `$('<p>').text`;
+
+app.displayGoalieStats = (player) => {
   app.addHideClass('.roster-list');
+  const playerSavePercentage = $('<p>').text(`Save Percentage: ${player.savePercentage}`);
+  $('.stats').append(playerSavePercentage);
+}
+
+// hide roster list
+// display goalie stats else display other play stats
+app.displayPlayerStats = (player) => {
+  // console.log(player);
+  app.addHideClass('.roster-list');
+
+  // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts 
+  // player  game winning goals, plusMinus 
+  
   const playerAssists = $('<p>').text(`assists: ${player.assists}`);
   const playerGoals = $('<p>').text(`goals: ${player.goals}`);
   const playerPoints = $('<p>').text(`points: ${player.points}`);
   const playerGames = $('<p>').text(`games played: ${player.games}`)
-  $('.stats').append(playerAssists, playerGoals, playerPoints, playerGames);
+  const playerGameWinningGoals = $('<p>').text(`game winning goals: ${player.gameWinningGoals}`)
+  const playerPlusMinus = $('<p>').text(`+-: ${player.plusMinus}`);
+  $('.stats').append(playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus);
 }
 
 app.addHideClass = (selector) => {
@@ -79,6 +121,10 @@ app.addHideClass = (selector) => {
 }
 
 // EVENT FUNCTIONS
+
+// listening for a click on the class team-name
+// item that is clicked, has its data-id value stored in teamID
+// teamID is passed to getTeamRoster
 app.getTeamID = () => {
   $('ul').on('click', '.team-name', function() {
     const teamID = $(this).data('id');
@@ -86,10 +132,21 @@ app.getTeamID = () => {
   })
 }
 
+// click event on player
+// pass playerID to getPlayerStats
 app.getPlayerID = () => {
   $('.roster-list').on('click', '.player-info', function() {
     const playerID = $(this).data('id');
-    app.getPlayerStats(playerID);
+    const playerPos = $(this).data('pos');
+
+    if (playerPos === "Goalie") {
+      // console.log('goalie');
+      app.getPlayerStats(playerID, playerPos);
+    }
+    else {
+      // console.log('other player');
+      app.getPlayerStats(playerID), playerPos;
+    }
   })
 }
 
