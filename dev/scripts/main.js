@@ -6,6 +6,7 @@ app.teamRosterURL = 'roster';
 app.playerURL = 'people';
 app.recentStatsURL = 'stats?stats=statsSingleSeason&season=';
 app.seasons = ['20172018', '20162017','20152016' ];
+app.alphabeticalRoster = [];
 
 // make an ajax call to return nhl teams then app.displayTeam is called with data.teams as the argument
 app.getData = () => {
@@ -25,7 +26,14 @@ app.getData = () => {
 // - class of team-name 
 // - the li contains text, team.name
 app.displayTeam = (teams) => {
-  // console.log(teams);
+  //Sort team alphabetically
+  teams.sort(function (a, b) {
+    let alc = a.name.toLowerCase(),
+      blc = b.name.toLowerCase();
+    return alc > blc ? 1 : alc < blc ? -1 : 0;
+  });
+
+  console.log(teams);
   teams.forEach((team) => {
     const teamName = $('<li>').attr('data-id', team.id).addClass('team-name').text(team.name);
     $('.teams ul').append(teamName);
@@ -36,15 +44,14 @@ app.displayTeam = (teams) => {
 // make an ajax call to grab the roster information of the specific team
 // pass data (player names) to displayTeamRoster
 app.getTeamRoster = (id) => {
-  // console.log(id);
   $.ajax({
     url: `${app.apiURL + app.teamURL}/${id}/${app.teamRosterURL}`,
     method: 'GET',
     dataType: 'json',
   })
   .then((teamRoster) => {
-    // console.log(teamRoster);
     app.displayTeamRoster(teamRoster.roster);
+    // app.sortTeamRoster(teamRoster.roster);
   })
 }
 
@@ -55,8 +62,15 @@ app.getTeamRoster = (id) => {
 // display position code add attribute of data-pos to verify if player is goalie
 // create displayed data as children to .roster-list
 // hide team names
+let newRoster = [];
+
 app.displayTeamRoster = (roster) => {
-  // console.log(roster);
+  //Sorting the roster by alphabetical order;
+  roster.sort(function (a, b) {
+    let alc = a.person.fullName.toLowerCase(),
+      blc = b.person.fullName.toLowerCase();
+    return alc > blc ? 1 : alc < blc ? -1 : 0;
+  });
   roster.forEach((players) => {
     const playerInfo = $('<li>').addClass('player-info').attr('data-id', players.person.id)
     .attr('data-pos', players.position.name);
@@ -111,7 +125,6 @@ const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
 // hide roster list
 // display goalie stats else display other play stats
 app.displayPlayerStats = (player) => {
-  // console.log(player);
   app.addHideClass('.roster-list');
   const playerAssists = $('<p>').text(`assists: ${player.assists}`);
   const playerGoals = $('<p>').text(`goals: ${player.goals}`);
