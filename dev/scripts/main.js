@@ -4,7 +4,8 @@ app.apiURL = 'https://statsapi.web.nhl.com/api/v1/';
 app.teamURL = 'teams';
 app.teamRosterURL = 'roster';
 app.playerURL = 'people';
-app.recentStatsURL = 'stats?stats=statsSingleSeason&season=20172018';
+app.recentStatsURL = 'stats?stats=statsSingleSeason&season=';
+app.seasons = ['20172018', '20162017','20152016' ];
 
 // make an ajax call to return nhl teams then app.displayTeam is called with data.teams as the argument
 app.getData = () => {
@@ -70,32 +71,41 @@ app.displayTeamRoster = (roster) => {
 
 // grab non-goalie player data
 // display player stats
-app.getPlayerStats = (id, pos) => {
-  // console.log(id);
-  $.ajax({
-    url: `${app.apiURL + app.playerURL}/${id}/${app.recentStatsURL}`,
+
+
+app.getPlayerStats = (season) => {
+  console.log(app.playerID, app.playerPosition);
+    $.ajax({
+    url: `${app.apiURL + app.playerURL}/${app.playerID}/${app.recentStatsURL + season} `,
     method: 'GET',
     dataType: 'json',
   })
+  
   .then((playerStats) => {
-    const x = playerStats.stats[0].splits[0].stat;
-    if (pos === 'Goalie') {
-      console.log('goalie')
+    const statList = playerStats.stats[0].splits[0].stat;
+    console.log(statList);
+    if (app.playerPosition === 'Goalie') {
+      // console.log('goalie')
       // console.log(pos)
-      app.displayGoalieStats(x);
+      app.displayGoalieStats(statList);
     }
     else {
-      console.log('other player')
+      // console.log('other player')
       // console.log(pos);
-      app.displayPlayerStats(x);
+      app.displayPlayerStats(statList);
     }
   })
 }
 
 app.displayGoalieStats = (player) => {
   app.addHideClass('.roster-list');
+  // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts 
   const playerSavePercentage = $('<p>').text(`Save Percentage: ${player.savePercentage}`);
-  $('.stats').append(playerSavePercentage);
+  const playerWins = $('<p>').text(`Wins: ${player.wins}`);
+const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalsAgainstAverage}`);
+const playerGames = $('<p>').text(`Games Played: ${player.games}`);
+const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
+  $('.stats').append(playerSavePercentage,playerWins, playerGoalsAgainstAverage, playerGames);
 }
 
 // hide roster list
@@ -103,10 +113,6 @@ app.displayGoalieStats = (player) => {
 app.displayPlayerStats = (player) => {
   // console.log(player);
   app.addHideClass('.roster-list');
-
-  // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts 
-  // player  game winning goals, plusMinus 
-  
   const playerAssists = $('<p>').text(`assists: ${player.assists}`);
   const playerGoals = $('<p>').text(`goals: ${player.goals}`);
   const playerPoints = $('<p>').text(`points: ${player.points}`);
@@ -136,17 +142,10 @@ app.getTeamID = () => {
 // pass playerID to getPlayerStats
 app.getPlayerID = () => {
   $('.roster-list').on('click', '.player-info', function() {
-    const playerID = $(this).data('id');
-    const playerPos = $(this).data('pos');
-
-    if (playerPos === "Goalie") {
-      // console.log('goalie');
-      app.getPlayerStats(playerID, playerPos);
-    }
-    else {
-      // console.log('other player');
-      app.getPlayerStats(playerID), playerPos;
-    }
+    app.playerID = $(this).data('id');
+    app.playerPosition = $(this).data('pos');
+    app.seasons.map(app.getPlayerStats);
+    
   })
 }
 
