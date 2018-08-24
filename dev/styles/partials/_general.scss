@@ -2,6 +2,15 @@ html {
     background: cornflowerblue;
 }
 
+img {
+  width: 100%;
+  display: block;
+}
+
+.team-image-container {
+  width: 50px;
+}
+
 .hide {
   display: none;
 }
