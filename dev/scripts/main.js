@@ -8,6 +8,13 @@ app.recentStatsURL = 'stats?stats=statsSingleSeason&season=';
 app.seasons = ['20172018', '20162017','20152016' ];
 app.alphabeticalRoster = [];
 app.chosenTeamName;
+app.currentSeason = '';
+app.seasonYear;
+
+//Graph Variables
+app.playerAssists = [];
+app.playerGoals = [];
+app.playerPoints = [];
 
 // make an ajax call to return nhl teams then app.displayTeam is called with data.teams as the argument
 app.getData = () => {
@@ -17,7 +24,6 @@ app.getData = () => {
     dataType: 'json',
   })
   .then((data) => {
-    console.log(data.teams);
     app.displayTeam(data.teams);
   })
 }
@@ -44,7 +50,7 @@ app.displayTeam = (teams) => {
     $(teamContainer).append(teamImageContainer, teamName);
     $('.teams ul').append(teamContainer);
   })
-} 
+}; 
 
 // When I click a team, load the roster for that team. I need to get and store the ID from the data-id when I click the team.
 // make an ajax call to grab the roster information of the specific team
@@ -91,7 +97,6 @@ app.displayTeamRoster = (roster) => {
 }
 
 app.getPlayerStats = (season) => {
-  console.log(app.playerID, app.playerPosition);
     $.ajax({
     url: `${app.apiURL + app.playerURL}/${app.playerID}/${app.recentStatsURL + season} `,
     method: 'GET',
@@ -99,7 +104,7 @@ app.getPlayerStats = (season) => {
   })
   .then((playerStats) => {
     const statList = playerStats.stats[0].splits[0].stat;
-    console.log(statList);
+    app.currentSeason = season;
     if (app.playerPosition === 'Goalie') {
       app.displayGoalieStats(statList);
     } else {
@@ -110,27 +115,45 @@ app.getPlayerStats = (season) => {
 
 app.displayGoalieStats = (player) => {
   app.addHideClass('.roster-list');
-  // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts 
+  // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts
+  const playerSeasonStatContainer = $('<div>').addClass('season-stats').attr('data-season', app.currentSeason); 
   const playerSavePercentage = $('<p>').text(`Save Percentage: ${player.savePercentage}`);
   const playerWins = $('<p>').text(`Wins: ${player.wins}`);
   const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalsAgainstAverage}`);
   const playerGames = $('<p>').text(`Games Played: ${player.games}`);
   const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
-  $('.stats').append(playerSavePercentage,playerWins, playerGoalsAgainstAverage, playerGames, playerShutouts);
+  $(playerSeasonStatContainer).append(playerSavePercentage, playerWins, playerGoalsAgainstAverage, playerGames, playerShutouts);
+  $('.stats').append(playerSeasonStatContainer);
 }
 
 // hide roster list
 // display goalie stats else display other play stats
 app.displayPlayerStats = (player) => {
   app.addHideClass('.roster-list');
+  console.log(app.currentSeason);
+  console.log(player);
+
+  const playerSeasonStatContainer = $('<div>').addClass('season-stats').attr('data-season', app.currentSeason);
   const playerAssists = $('<p>').text(`assists: ${player.assists}`);
   const playerGoals = $('<p>').text(`goals: ${player.goals}`);
   const playerPoints = $('<p>').text(`points: ${player.points}`);
   const playerGames = $('<p>').text(`games played: ${player.games}`)
   const playerGameWinningGoals = $('<p>').text(`game winning goals: ${player.gameWinningGoals}`)
   const playerPlusMinus = $('<p>').text(`+-: ${player.plusMinus}`);
-  $('.stats').append(playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus);
+  $(playerSeasonStatContainer).append(playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus).prepend(app.seasonYear);
+  
+  $('.stats').append(playerSeasonStatContainer);
+
+  // if ($('.season-stats').data('season') === 20172018) {
+  //   $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
+  // };
+
+  app.playerAssists.push(player.assists);
+  app.playerGoals.push(player.goals);
+  app.playerPoints.push(player.points);
+
 }
+
 
 app.addHideClass = (selector) => {
   $(selector).addClass('hide');
