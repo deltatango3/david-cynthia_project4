@@ -20,6 +20,7 @@ app.getData = () => {
     dataType: 'json',
   })
   .then((data) => {
+    console.log(data.teams);
     app.displayTeam(data.teams);
   })
 }
@@ -37,10 +38,14 @@ app.displayTeam = (teams) => {
     return alc > blc ? 1 : alc < blc ? -1 : 0;
   });
 
-  console.log(teams);
   teams.forEach((team) => {
-    const teamName = $('<li>').attr('data-id', team.id).attr('data-team-name', team.name).addClass('team-name').text(team.name);
-    $('.teams ul').append(teamName);
+    const teamContainer = $('<li>').addClass('team');
+    const teamImageContainer = $('<div>').addClass('team-image-container');
+    const teamImage = $('<img>').addClass('team-image').attr('src', `public/images/logo-${team.id}.png`);
+    const teamName = $('<p>').attr('data-id', team.id).attr('data-team-name', team.name).addClass('team-name').text(team.name);
+    $(teamImageContainer).append(teamImage);
+    $(teamContainer).append(teamImageContainer, teamName);
+    $('.teams ul').append(teamContainer);
   })
 } 
 
