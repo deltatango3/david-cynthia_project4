@@ -52,7 +52,6 @@ app.getTeamRoster = (id) => {
   })
   .then((teamRoster) => {
     app.displayTeamRoster(teamRoster.roster);
-    // app.sortTeamRoster(teamRoster.roster);
   })
 }
 
