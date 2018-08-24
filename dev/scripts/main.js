@@ -92,6 +92,7 @@ app.aggregateGameData = (data) => {
       app.nextFiveGames['game' + gameCount].gameStartTime = data[i].dates.start.localTime;
       app.nextFiveGames['game' + gameCount].ticketURL = data[i].url;
       gameCount += 1;
+      console.log(app.nextFiveGames);
       // app.displayGameInfo(app.nextFiveGames['game' + gameCount]);
     }
   }
@@ -105,8 +106,9 @@ async function getRosterAndGameData(id) {
   app.aggregateGameData(app.gameData);
 }
 
-// app.displayGameInfo = (data) => {
-//   // console.log(data);
+app.displayGameInfo = (data) => {
+  // console.log(data);
+  // console.log('yay')
 //   const gameContainer = $('<ul>').addClass('game-container');
 //   const gameItem = $('<li>').addClass('game-item');
 //   // const gameLink = $('<a>').addClass('game-link').attr(`href= ${data.ticketURL}`);
@@ -115,7 +117,7 @@ async function getRosterAndGameData(id) {
   
 //   $('.game-container').append(gameItem);
 //   $('.games-contaner').append(gameContainer);
-// }
+}
 
 // loop through the team roster
 // create a list item and adding a class of player-info and attribute data-id with the player's id
