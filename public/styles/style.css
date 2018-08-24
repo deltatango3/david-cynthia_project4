@@ -134,5 +134,12 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
 html {
   background: cornflowerblue; }
 
+img {
+  width: 100%;
+  display: block; }
+
+.team-image-container {
+  width: 50px; }
+
 .hide {
   display: none; }
