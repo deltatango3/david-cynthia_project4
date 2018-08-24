@@ -22,7 +22,7 @@ gulp.task('js', () => {
     })
     .transform('babelify', {
       sourceMaps: true,
-      presets: ['env']
+      presets: [['env', { "targets": { "node": "current" } }]]
     })
     .bundle()
     .on('error', notify.onError({

@@ -53,18 +53,18 @@ app.displayTeam = (teams) => {
 // make an ajax call to grab the roster information of the specific team
 // pass data (player names) to displayTeamRoster
 app.getTeamRoster = (id) => {
-  $.ajax({
+  return $.ajax({
     url: `${app.apiURL + app.teamURL}/${id}/${app.teamRosterURL}`,
     method: 'GET',
     dataType: 'json',
   })
-  .then((teamRoster) => {
-    app.displayTeamRoster(teamRoster.roster);
-  })
+  // .then((teamRoster) => {
+  //   app.displayTeamRoster(teamRoster.roster);
+  // })
 }
 
 app.getGameData = () => {
-  $.ajax({
+  return $.ajax({
 
     url: app.ticketmasterApiURL,
     method: 'GET',
@@ -75,28 +75,47 @@ app.getGameData = () => {
       sort: 'date,asc',
     }
   })
-    .then((data) => {
-
-      data = data._embedded.events;
-      console.log(data);
-      // gameCount is the variable that appends to app.nextFiveGames.game<gameCount>
-      let gameCount = 0;
-      // get next 5 game data
-      // the condition calculates the length of the object - don't ask me how it works
-      for (let i = 0; Object.getOwnPropertyNames(app.nextFiveGames).length <= 4; i++) {
-        // exclude duplicate preseason game
-        if (data[i].info != "PRESEASON GAME") {
-          app.nextFiveGames['game' + gameCount] = {};
-          app.nextFiveGames['game' + gameCount].name = data[i].name;
-          app.nextFiveGames['game' + gameCount].gameDate = data[i].dates.start.localDate;
-          app.nextFiveGames['game' + gameCount].gameStartTime = data[i].dates.start.localTime;
-          app.nextFiveGames['game' + gameCount].ticketURL = data[i].url;
-          gameCount += 1;
-        }
-      }
-      console.log(app.nextFiveGames);
-    })
 }
+
+app.aggregateGameData = (data) => {
+  data = data._embedded.events;
+  // gameCount is the variable that appends to app.nextFiveGames.game<gameCount>
+  let gameCount = 0;
+  // get next 5 game data
+  // the condition calculates the length of the object - don't ask me how it works
+  for (let i = 0; Object.getOwnPropertyNames(app.nextFiveGames).length <= 4; i++) {
+    // exclude duplicate preseason game
+    if (data[i].info != "PRESEASON GAME") {
+      app.nextFiveGames['game' + gameCount] = {};
+      app.nextFiveGames['game' + gameCount].name = data[i].name;
+      app.nextFiveGames['game' + gameCount].gameDate = data[i].dates.start.localDate;
+      app.nextFiveGames['game' + gameCount].gameStartTime = data[i].dates.start.localTime;
+      app.nextFiveGames['game' + gameCount].ticketURL = data[i].url;
+      gameCount += 1;
+      // app.displayGameInfo(app.nextFiveGames['game' + gameCount]);
+    }
+  }
+  console.log(app.nextFiveGames);
+}
+
+async function getRosterAndGameData(id) {
+  app.teamRoster = await app.getTeamRoster(id);
+  app.gameData  = await app.getGameData();
+  app.displayTeamRoster(app.teamRoster.roster)
+  app.aggregateGameData(app.gameData);
+}
+
+// app.displayGameInfo = (data) => {
+//   // console.log(data);
+//   const gameContainer = $('<ul>').addClass('game-container');
+//   const gameItem = $('<li>').addClass('game-item');
+//   // const gameLink = $('<a>').addClass('game-link').attr(`href= ${data.ticketURL}`);
+//   console.log(gameLink);
+  
+  
+//   $('.game-container').append(gameItem);
+//   $('.games-contaner').append(gameContainer);
+// }
 
 // loop through the team roster
 // create a list item and adding a class of player-info and attribute data-id with the player's id
@@ -181,10 +200,12 @@ app.addHideClass = (selector) => {
 // teamID is passed to getTeamRoster
 app.getTeamID = () => {
   $('ul').on('click', '.team-name', function() {
+    // console.log('click team')
     const teamID = $(this).data('id');
     app.chosenTeamName = $(this).data('team-name');
-    app.getTeamRoster(teamID);
-    app.getGameData();
+    // app.getTeamRoster(id);
+    getRosterAndGameData(teamID);
+    // app.getGameData();
   })
 }
 
