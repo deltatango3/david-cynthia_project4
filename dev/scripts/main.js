@@ -7,6 +7,7 @@ app.playerURL = 'people';
 app.recentStatsURL = 'stats?stats=statsSingleSeason&season=';
 app.seasons = ['20172018', '20162017','20152016' ];
 app.alphabeticalRoster = [];
+app.chosenTeamName;
 
 // make an ajax call to return nhl teams then app.displayTeam is called with data.teams as the argument
 app.getData = () => {
@@ -35,7 +36,7 @@ app.displayTeam = (teams) => {
 
   console.log(teams);
   teams.forEach((team) => {
-    const teamName = $('<li>').attr('data-id', team.id).addClass('team-name').text(team.name);
+    const teamName = $('<li>').attr('data-id', team.id).attr('data-team-name', team.name).addClass('team-name').text(team.name);
     $('.teams ul').append(teamName);
   })
 } 
@@ -62,30 +63,28 @@ app.getTeamRoster = (id) => {
 // display position code add attribute of data-pos to verify if player is goalie
 // create displayed data as children to .roster-list
 // hide team names
-let newRoster = [];
 
 app.displayTeamRoster = (roster) => {
   //Sorting the roster by alphabetical order;
+  $('.roster').prepend(`<h2>${app.chosenTeamName}</h2>`);
   roster.sort(function (a, b) {
     let alc = a.person.fullName.toLowerCase(),
       blc = b.person.fullName.toLowerCase();
     return alc > blc ? 1 : alc < blc ? -1 : 0;
   });
+  // console.log(app.chosenTeamName);
   roster.forEach((players) => {
     const playerInfo = $('<li>').addClass('player-info').attr('data-id', players.person.id)
-    .attr('data-pos', players.position.name);
+    .attr('data-pos', players.position.name).attr('data-name', players.person.fullName).attr('data-number', players.jerseyNumber);
     const playerName = $('<p>').text(players.person.fullName);
     const playerNumber = $('<span>').text(players.jerseyNumber);
     const playerPosition = $('<p>').attr("data-pos", players.position.name).text(players.position.code);
     playerInfo.append(playerNumber, playerName, playerPosition);
     $('.roster-list').append(playerInfo);
   })
+
   app.addHideClass('.teams');
 }
-
-// grab non-goalie player data
-// display player stats
-
 
 app.getPlayerStats = (season) => {
   console.log(app.playerID, app.playerPosition);
@@ -94,18 +93,12 @@ app.getPlayerStats = (season) => {
     method: 'GET',
     dataType: 'json',
   })
-  
   .then((playerStats) => {
     const statList = playerStats.stats[0].splits[0].stat;
     console.log(statList);
     if (app.playerPosition === 'Goalie') {
-      // console.log('goalie')
-      // console.log(pos)
       app.displayGoalieStats(statList);
-    }
-    else {
-      // console.log('other player')
-      // console.log(pos);
+    } else {
       app.displayPlayerStats(statList);
     }
   })
@@ -116,10 +109,10 @@ app.displayGoalieStats = (player) => {
   // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts 
   const playerSavePercentage = $('<p>').text(`Save Percentage: ${player.savePercentage}`);
   const playerWins = $('<p>').text(`Wins: ${player.wins}`);
-const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalsAgainstAverage}`);
-const playerGames = $('<p>').text(`Games Played: ${player.games}`);
-const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
-  $('.stats').append(playerSavePercentage,playerWins, playerGoalsAgainstAverage, playerGames);
+  const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalsAgainstAverage}`);
+  const playerGames = $('<p>').text(`Games Played: ${player.games}`);
+  const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
+  $('.stats').append(playerSavePercentage,playerWins, playerGoalsAgainstAverage, playerGames, playerShutouts);
 }
 
 // hide roster list
@@ -147,6 +140,7 @@ app.addHideClass = (selector) => {
 app.getTeamID = () => {
   $('ul').on('click', '.team-name', function() {
     const teamID = $(this).data('id');
+    app.chosenTeamName = $(this).data('team-name');
     app.getTeamRoster(teamID);
   })
 }
