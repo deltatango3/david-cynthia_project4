@@ -8,6 +8,9 @@ app.recentStatsURL = 'stats?stats=statsSingleSeason&season=';
 app.seasons = ['20172018', '20162017','20152016' ];
 app.alphabeticalRoster = [];
 app.chosenTeamName;
+app.ticketmasterApiURL = 'https://app.ticketmaster.com/discovery/v2/events.json';
+app.ticketmasterApiKey = 'AabmVbCHA2zPjQoA1lb98cN1NQyuFGF4';
+app.nextFiveGames = {};
 
 // make an ajax call to return nhl teams then app.displayTeam is called with data.teams as the argument
 app.getData = () => {
@@ -53,6 +56,41 @@ app.getTeamRoster = (id) => {
   .then((teamRoster) => {
     app.displayTeamRoster(teamRoster.roster);
   })
+}
+
+app.getGameData = () => {
+  $.ajax({
+
+    url: app.ticketmasterApiURL,
+    method: 'GET',
+    dataType: 'json',
+    data: {
+      apikey: app.ticketmasterApiKey,
+      keyword: app.chosenTeamName,
+      sort: 'date,asc',
+    }
+  })
+    .then((data) => {
+
+      data = data._embedded.events;
+      console.log(data);
+      // gameCount is the variable that appends to app.nextFiveGames.game<gameCount>
+      let gameCount = 0;
+      // get next 5 game data
+      // the condition calculates the length of the object - don't ask me how it works
+      for (let i = 0; Object.getOwnPropertyNames(app.nextFiveGames).length <= 4; i++) {
+        // exclude duplicate preseason game
+        if (data[i].info != "PRESEASON GAME") {
+          app.nextFiveGames['game' + gameCount] = {};
+          app.nextFiveGames['game' + gameCount].name = data[i].name;
+          app.nextFiveGames['game' + gameCount].gameDate = data[i].dates.start.localDate;
+          app.nextFiveGames['game' + gameCount].gameStartTime = data[i].dates.start.localTime;
+          app.nextFiveGames['game' + gameCount].ticketURL = data[i].url;
+          gameCount += 1;
+        }
+      }
+      console.log(app.nextFiveGames);
+    })
 }
 
 // loop through the team roster
@@ -141,6 +179,7 @@ app.getTeamID = () => {
     const teamID = $(this).data('id');
     app.chosenTeamName = $(this).data('team-name');
     app.getTeamRoster(teamID);
+    app.getGameData();
   })
 }
 
