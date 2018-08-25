@@ -6,6 +6,8 @@ const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const notify = require('gulp-notify');
 const browserSync = require('browser-sync');
+const babelPolyfill = require('babel-polyfill');
+const babelCoreRegister = require("babel-core/register");
 const reload = browserSync.reload;
 
 gulp.task('styles', () => {
