@@ -140,7 +140,8 @@ body {
 h1 {
   color: #f1f7ed;
   text-transform: uppercase;
-  letter-spacing: 3px; }
+  letter-spacing: 3px;
+  text-align: center; }
 
 .team-name {
   font-size: 1.4rem; }
@@ -208,5 +209,5 @@ img {
       padding: 1rem .5rem 1rem 1rem;
       width: 100%; }
     .teams .team-container .team-image-container {
-      width: 25px;
+      width: 20px;
       margin-right: 10px; }

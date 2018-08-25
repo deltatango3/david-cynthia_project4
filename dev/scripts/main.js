@@ -138,8 +138,11 @@ app.displayTeamRoster = (roster) => {
     $('.roster-list').append(playerInfo);
   })
 
+  app.updateHeader(app.chosenTeamName);
   app.addHideClass('.teams');
 }
+
+
 
 app.getPlayerStats = (season) => {
     $.ajax({
@@ -192,6 +195,10 @@ app.displayPlayerStats = (player) => {
   };
 
 }
+
+app.updateHeader = (heading) => {
+  $('header .hero h1').text(heading)
+};
 
 app.addHideClass = (selector) => {
   $(selector).addClass('hide');
