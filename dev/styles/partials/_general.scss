@@ -2,13 +2,28 @@ html {
     background: cornflowerblue;
 }
 
+h1, ul, p {
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+button {
+  border: none;
+  background: none;
+}
 img {
   width: 100%;
   display: block;
 }
 
-.team-image-container {
-  width: 50px;
+.wrapper {
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
 .hide {

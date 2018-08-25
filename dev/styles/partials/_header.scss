@@ -1,0 +1,50 @@
+nav {
+  background: #fff;
+  color: $black;
+  & .nav-menu-container {
+    padding: 1rem 0;
+  }
+  & .wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+  & .burger-menu-icon {
+    color: $accent;
+  }
+  & .nav-menu {
+    background-color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+  }
+}
+
+.home-page {
+  & .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)),
+    url(../images/hockey-bg.jpg) no-repeat center;
+    background-size: cover;
+  }
+}
+
+.main-page {
+  & .hero {
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url(../images/hockey-bg.jpg) no-repeat center;
+    background-size: cover;
+    padding: 7rem 0 9rem;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.hero-cta {
+  background-color: $accent;
+  padding: 4rem 6rem;
+  color: $white;
+  margin-top: 8rem;
+}
