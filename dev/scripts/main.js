@@ -42,7 +42,7 @@ app.displayTeam = (teams) => {
   });
 
   teams.forEach((team) => {
-    const teamContainer = $('<li>').addClass('team-container');
+    const teamContainer = $('<li>').addClass('team-container').attr('data-id', team.id).attr('data-team-name', team.name);
     const teamItem = $('<button>').addClass('team');
     const teamImageContainer = $('<div>').addClass('team-image-container');
     const teamImage = $('<img>').addClass('team-image').attr('src', `public/images/logo-${team.id}.png`);
@@ -203,7 +203,7 @@ app.addHideClass = (selector) => {
 // item that is clicked, has its data-id value stored in teamID
 // teamID is passed to getTeamRoster
 app.getTeamID = () => {
-  $('ul').on('click', '.team-name', function() {
+  $('ul').on('click', '.team-container', function() {
     const teamID = $(this).data('id');
     app.chosenTeamName = $(this).data('team-name');
     // app.getTeamRoster(id);
