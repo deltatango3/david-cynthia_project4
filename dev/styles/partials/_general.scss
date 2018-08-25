@@ -1,7 +1,3 @@
-html {
-    background: cornflowerblue;
-}
-
 h1, ul, p {
   margin: 0;
   padding: 0;
@@ -28,4 +24,17 @@ img {
 
 .hide {
   display: none;
+}
+
+.container {
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+}
+
+.section-main {
+  background-color: #fff;
+  flex: 0 0 90%;
+  margin-top: -5rem;
+  padding: 1rem;
 }

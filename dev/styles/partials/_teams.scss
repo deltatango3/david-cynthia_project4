@@ -19,6 +19,7 @@
   flex: 0 0 50%;
   align-items: center;
   display: flex;
+  transition: all 300ms ease-in;
   @media (min-width: $tablet) {
     flex-basis: 33%;
   }
@@ -27,6 +28,9 @@
   }
   &:hover {
     background-color: $accent;
+  }
+  &:hover .team-name {
+    color: #fff;
   }
   & .team {
     display: flex;
@@ -38,5 +42,8 @@
   .team-image-container {
     width: 20px;
     margin-right: 10px;
+  }
+  .team-name {
+    transition: all 200ms ease-in;
   }
 }

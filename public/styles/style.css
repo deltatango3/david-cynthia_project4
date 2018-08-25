@@ -151,9 +151,6 @@ h1 {
 .team-name {
   font-size: 1.4rem; }
 
-html {
-  background: cornflowerblue; }
-
 h1, ul, p {
   margin: 0;
   padding: 0; }
@@ -179,6 +176,17 @@ img {
 .hide {
   display: none; }
 
+.container {
+  background-color: #f1f7ed;
+  display: flex;
+  justify-content: center; }
+
+.section-main {
+  background-color: #fff;
+  flex: 0 0 90%;
+  margin-top: -5rem;
+  padding: 1rem; }
+
 nav {
   background: #fff;
   color: #292F36; }
@@ -193,7 +201,8 @@ nav {
     background-color: #fff;
     display: flex;
     flex-wrap: wrap;
-    position: absolute; }
+    position: absolute;
+    border-bottom: 3px solid #8e27ba; }
 
 .home-page .hero {
   display: flex;
@@ -234,7 +243,8 @@ nav {
 .team-container {
   flex: 0 0 50%;
   align-items: center;
-  display: flex; }
+  display: flex;
+  transition: all 300ms ease-in; }
   @media (min-width: 501px) {
     .team-container {
       flex-basis: 33%; } }
@@ -243,6 +253,8 @@ nav {
       flex-basis: 25%; } }
   .team-container:hover {
     background-color: #8e27ba; }
+  .team-container:hover .team-name {
+    color: #fff; }
   .team-container .team {
     display: flex;
     flex-wrap: wrap;
@@ -252,3 +264,8 @@ nav {
   .team-container .team-image-container {
     width: 20px;
     margin-right: 10px; }
+  .team-container .team-name {
+    transition: all 200ms ease-in; }
+
+.player-info {
+  display: flex; }

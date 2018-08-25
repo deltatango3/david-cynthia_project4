@@ -158,7 +158,7 @@ app.displayTeamRoster = (roster) => {
     const playerName = $('<p>').text(players.person.fullName);
     const playerNumber = $('<span>').text(players.jerseyNumber);
     const playerPosition = $('<p>').attr("data-pos", players.position.name).text(players.position.code);
-    playerInfo.append(playerNumber, playerName, playerPosition);
+    playerInfo.append(playerNumber, playerPosition, playerName);
     $('.roster-list').append(playerInfo);
   })
 
