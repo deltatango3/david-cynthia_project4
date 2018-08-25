@@ -143,6 +143,11 @@ h1 {
   letter-spacing: 3px;
   text-align: center; }
 
+.hero-cta {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px; }
+
 .team-name {
   font-size: 1.4rem; }
 
@@ -155,6 +160,9 @@ h1, ul, p {
 
 ul {
   list-style-type: none; }
+
+a {
+  text-decoration: none; }
 
 button {
   border: none;
@@ -171,11 +179,30 @@ img {
 .hide {
   display: none; }
 
-.hero {
+.main-page .hero {
   background-color: #292F36;
   padding: 7rem 0 9rem;
   display: flex;
   justify-content: center; }
+
+.homePage header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url(../images/hockey-bg.jpg) no-repeat center;
+  background-size: cover; }
+
+.homePage .hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.hero-cta {
+  background-color: #8e27ba;
+  padding: 4rem 6rem;
+  color: #f1f7ed;
+  margin-top: 8rem; }
 
 .teams-container {
   background-color: #f1f7ed;
