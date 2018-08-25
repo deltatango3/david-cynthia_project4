@@ -1,0 +1,41 @@
+.teams-container {
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+}
+
+.teams {
+  background-color: #fff;
+  flex: 0 0 90%;
+  margin-top: -5rem;
+  padding: 1rem;
+  & ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  & .team-container {
+  flex: 0 0 50%;
+  align-items: center;
+  display: flex;
+  @media (min-width: $tablet) {
+    flex-basis: 33%;
+  }
+  @media (min-width: $desktop) {
+    flex-basis: 25%;
+  }
+  &:hover {
+    background-color: $accent;
+  }
+  & .team {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 1rem .5rem 1rem 1rem;
+    width: 100%;
+  }
+  & .team-image-container {
+    width: 25px;
+    margin-right: 10px;
+  }
+}
+}

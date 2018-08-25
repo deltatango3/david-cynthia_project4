@@ -11,11 +11,6 @@ app.chosenTeamName;
 app.currentSeason = '';
 app.seasonYear;
 
-//Graph Variables
-  app.playerAssists = [];
-  app.playerGoals = [];
-  app.playerPoints = [];
-
 app.ticketmasterApiURL = 'https://app.ticketmaster.com/discovery/v2/events.json';
 app.ticketmasterApiKey = 'AabmVbCHA2zPjQoA1lb98cN1NQyuFGF4';
 app.nextFiveGames = {};
@@ -38,6 +33,7 @@ app.getData = () => {
 // - class of team-name 
 // - the li contains text, team.name
 app.displayTeam = (teams) => {
+  console.log(teams)
   //Sort team alphabetically
   teams.sort(function (a, b) {
     let alc = a.name.toLowerCase(),
@@ -46,12 +42,14 @@ app.displayTeam = (teams) => {
   });
 
   teams.forEach((team) => {
-    const teamContainer = $('<li>').addClass('team');
+    const teamContainer = $('<li>').addClass('team-container');
+    const teamItem = $('<button>').addClass('team');
     const teamImageContainer = $('<div>').addClass('team-image-container');
     const teamImage = $('<img>').addClass('team-image').attr('src', `public/images/logo-${team.id}.png`);
-    const teamName = $('<p>').attr('data-id', team.id).attr('data-team-name', team.name).addClass('team-name').text(team.name);
+    const teamName = $('<p>').attr('data-id', team.id).attr('data-team-name', team.name).addClass('team-name').text(team.shortName);
     $(teamImageContainer).append(teamImage);
-    $(teamContainer).append(teamImageContainer, teamName);
+    $(teamItem).append(teamImageContainer, teamName);
+    $(teamContainer).append(teamItem)
     $('.teams ul').append(teamContainer);
   })
 }; 
@@ -88,13 +86,8 @@ app.getGameData = () => {
 app.aggregateGameData = (data) => {
   
   data = data._embedded.events;
-  // gameCount is the variable that appends to app.nextFiveGames.game<gameCount>
-  // let gameCount = 0;
-  // console.log(data);
 
   data.forEach((data) => {
-
-    console.log(data);
     const gameLink = $('<a>').addClass('game-link').attr('href', data.url);
     const opponentsContainer = $('<div>').addClass('opponents-container');
     const opponents = $('<p>').text(data.name);
@@ -108,58 +101,7 @@ app.aggregateGameData = (data) => {
     gameLink.append(opponentsContainer,gameInfoContainer, buyNow);
 
     $('.games-container').append(gameLink);
-
-    
-    // const gameContainer = $('<ul>').addClass('game-container');
-    // const gameItem = $('<li>').addClass('game-item');
-    // const gameLink = $('<a>').addClass('game-link').attr('href', data.ticketURL);
-    // const opponentsContainer = $('<div>').addClass('opponents-container');
-    // const opponents = $('<p>').addClass('opponents').text(data.opponents);
-    
-    // $('.games-container').append(gameContainer);
-    // $('.game-container').append(gameItem);
-    // $('.game-item').append(gameLink);
-    // $('.game-link').append(opponentsContainer);
-    // $('.opponents-container').append(opponents);
   })
-
-
-  // get next 5 game data
-  // the condition calculates the length of the object - don't ask me how it works
-  // Object.getOwnPropertyNames(app.nextFiveGames).length
-  // for (let i = 0; i <= 4; i++) {
-  //   // exclude duplicate preseason game
-  //   // console.log(data[i]);
-  //   // console.log(gameCount)
-  //   // != "PRESEASON GAME")
-  //   if (data[i].name.includes('Preseason') == false) {
-  //     app.nextFiveGames['game' + gameCount] = {};
-  //     app.nextFiveGames['game' + gameCount].opponents = data[i].name;
-  //     app.nextFiveGames['game' + gameCount].gameDate = data[i].dates.start.localDate;
-  //     app.nextFiveGames['game' + gameCount].gameStartTime = data[i].dates.start.localTime;
-  //     app.nextFiveGames['game' + gameCount].ticketURL = data[i].url;
-
-  //     const gameContainer = $('<ul>').addClass('game-container');
-  //     const gameItem = $('<li>').addClass('game-item');
-    
-  //     const gameLink = $('<a>').addClass('game-link').attr('href', data[i].url);
-  //     const opponentsContainer = $('<div>').addClass('opponents-container');
-   
-  //     const opponents = $('<p>').addClass('opponents').text(data[i].name);
-      
-  //   $('.games-container').append(gameContainer);
-  //   $('.game-container').append(gameItem);
-  //   $('.game-item').append(gameLink);
-  //   $('.game-link').append(opponentsContainer);
-  //   $('.opponents-container').append(opponents);
-
-  //     // console.log(app.nextFiveGames['game' + gameCount]);
-  //     // app.displayGameInfo(app.nextFiveGames['game' + gameCount]);
-  //     gameCount += 1;
-  //   console.log(app.nextFiveGames);
-  //   }
-  // }
-  // // console.log(app.nextFiveGames);
 }
 
 async function getRosterAndGameData(id) {
@@ -168,22 +110,6 @@ async function getRosterAndGameData(id) {
   app.displayTeamRoster(app.teamRoster.roster)
   app.aggregateGameData(app.gameData);
 }
-
-// app.displayGameInfo = (data) => {
-//   // console.log('yay')
-//   const gameContainer = $('<ul>').addClass('game-container');
-//   const gameItem = $('<li>').addClass('game-item');
-//   const gameLink = $('<a>').addClass('game-link').attr('href',data.ticketURL);
-//   const opponentsContainer = $('<div>').addClass('opponents-container');
-//   const opponents = $('<p>').addClass('opponents').text(data.opponents);
-
-    
-//   $('.games-container').append(gameContainer);
-//   $('.game-container').append(gameItem);
-//   $('.game-item').append(gameLink);
-//   $('.game-link').append(opponentsContainer);
-//   $('.opponents-container').append(opponents);
-// }
 
 // loop through the team roster
 // create a list item and adding a class of player-info and attribute data-id with the player's id
@@ -224,7 +150,6 @@ app.getPlayerStats = (season) => {
   .then((playerStats) => {
     const statList = playerStats.stats[0].splits[0].stat;
     app.currentSeason = season;
-    console.log(app.currentSeason);
     if (app.playerPosition === 'Goalie') {
       app.displayGoalieStats(statList);
     } else {
@@ -262,18 +187,11 @@ app.displayPlayerStats = (player) => {
   
   $('.stats').append(playerSeasonStatContainer);
 
-  // if ($('.season-stats').data('season') === 20172018) {
-  //   $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
-  // };
-
-
-  app.playerAssists.push(player.assists);
-  console.log(player.goals);
-  // app.playerGoals.push(player.goals);
-  // app.playerPoints.push(player.points);
+  if ($('.season-stats').data('season') === 20172018) {
+    $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
+  };
 
 }
-
 
 app.addHideClass = (selector) => {
   $(selector).addClass('hide');
@@ -286,7 +204,6 @@ app.addHideClass = (selector) => {
 // teamID is passed to getTeamRoster
 app.getTeamID = () => {
   $('ul').on('click', '.team-name', function() {
-    // console.log('click team')
     const teamID = $(this).data('id');
     app.chosenTeamName = $(this).data('team-name');
     // app.getTeamRoster(id);

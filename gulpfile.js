@@ -8,6 +8,7 @@ const notify = require('gulp-notify');
 const browserSync = require('browser-sync');
 const babelPolyfill = require('babel-polyfill');
 const babelCoreRegister = require("babel-core/register");
+const babelAsync = require("babel-plugin-transform-async-to-generator");
 const reload = browserSync.reload;
 
 gulp.task('styles', () => {
