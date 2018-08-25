@@ -79,30 +79,87 @@ app.getGameData = () => {
       apikey: app.ticketmasterApiKey,
       keyword: app.chosenTeamName,
       sort: 'date,asc',
+      size: "5",
+      classificationName: 'NHL'
     }
   })
 }
 
 app.aggregateGameData = (data) => {
+  
   data = data._embedded.events;
   // gameCount is the variable that appends to app.nextFiveGames.game<gameCount>
-  let gameCount = 0;
+  // let gameCount = 0;
+  // console.log(data);
+
+  data.forEach((data) => {
+
+    console.log(data);
+    const gameLink = $('<a>').addClass('game-link').attr('href', data.url);
+    const opponentsContainer = $('<div>').addClass('opponents-container');
+    const opponents = $('<p>').text(data.name);
+    const gameInfoContainer = $('<div>').addClass('game-info-container');
+    const gameDate = $('<p>').text(data.dates.start.localDate);
+    const gameTime = $('<p>').text(data.dates.start.localTime);
+    const buyNow = $('<p>').addClass('buy-now').text('Buy Now')
+
+    opponentsContainer.append(opponents);
+    gameInfoContainer.append(gameDate, gameTime);
+    gameLink.append(opponentsContainer,gameInfoContainer, buyNow);
+
+    $('.games-container').append(gameLink);
+
+    
+    // const gameContainer = $('<ul>').addClass('game-container');
+    // const gameItem = $('<li>').addClass('game-item');
+    // const gameLink = $('<a>').addClass('game-link').attr('href', data.ticketURL);
+    // const opponentsContainer = $('<div>').addClass('opponents-container');
+    // const opponents = $('<p>').addClass('opponents').text(data.opponents);
+    
+    // $('.games-container').append(gameContainer);
+    // $('.game-container').append(gameItem);
+    // $('.game-item').append(gameLink);
+    // $('.game-link').append(opponentsContainer);
+    // $('.opponents-container').append(opponents);
+  })
+
+
   // get next 5 game data
   // the condition calculates the length of the object - don't ask me how it works
-  for (let i = 0; Object.getOwnPropertyNames(app.nextFiveGames).length <= 4; i++) {
-    // exclude duplicate preseason game
-    if (data[i].info != "PRESEASON GAME") {
-      app.nextFiveGames['game' + gameCount] = {}; 
-      app.nextFiveGames['game' + gameCount].name = data[i].name;
-      app.nextFiveGames['game' + gameCount].gameDate = data[i].dates.start.localDate;
-      app.nextFiveGames['game' + gameCount].gameStartTime = data[i].dates.start.localTime;
-      app.nextFiveGames['game' + gameCount].ticketURL = data[i].url;
-      gameCount += 1;
-      console.log(app.nextFiveGames);
-      // app.displayGameInfo(app.nextFiveGames['game' + gameCount]);
-    }
-  }
-  console.log(app.nextFiveGames);
+  // Object.getOwnPropertyNames(app.nextFiveGames).length
+  // for (let i = 0; i <= 4; i++) {
+  //   // exclude duplicate preseason game
+  //   // console.log(data[i]);
+  //   // console.log(gameCount)
+  //   // != "PRESEASON GAME")
+  //   if (data[i].name.includes('Preseason') == false) {
+  //     app.nextFiveGames['game' + gameCount] = {};
+  //     app.nextFiveGames['game' + gameCount].opponents = data[i].name;
+  //     app.nextFiveGames['game' + gameCount].gameDate = data[i].dates.start.localDate;
+  //     app.nextFiveGames['game' + gameCount].gameStartTime = data[i].dates.start.localTime;
+  //     app.nextFiveGames['game' + gameCount].ticketURL = data[i].url;
+
+  //     const gameContainer = $('<ul>').addClass('game-container');
+  //     const gameItem = $('<li>').addClass('game-item');
+    
+  //     const gameLink = $('<a>').addClass('game-link').attr('href', data[i].url);
+  //     const opponentsContainer = $('<div>').addClass('opponents-container');
+   
+  //     const opponents = $('<p>').addClass('opponents').text(data[i].name);
+      
+  //   $('.games-container').append(gameContainer);
+  //   $('.game-container').append(gameItem);
+  //   $('.game-item').append(gameLink);
+  //   $('.game-link').append(opponentsContainer);
+  //   $('.opponents-container').append(opponents);
+
+  //     // console.log(app.nextFiveGames['game' + gameCount]);
+  //     // app.displayGameInfo(app.nextFiveGames['game' + gameCount]);
+  //     gameCount += 1;
+  //   console.log(app.nextFiveGames);
+  //   }
+  // }
+  // // console.log(app.nextFiveGames);
 }
 
 async function getRosterAndGameData(id) {
@@ -113,14 +170,19 @@ async function getRosterAndGameData(id) {
 }
 
 // app.displayGameInfo = (data) => {
+//   // console.log('yay')
 //   const gameContainer = $('<ul>').addClass('game-container');
 //   const gameItem = $('<li>').addClass('game-item');
-//   // const gameLink = $('<a>').addClass('game-link').attr(`href= ${data.ticketURL}`);
-//   console.log(gameLink);
-  
-  
+//   const gameLink = $('<a>').addClass('game-link').attr('href',data.ticketURL);
+//   const opponentsContainer = $('<div>').addClass('opponents-container');
+//   const opponents = $('<p>').addClass('opponents').text(data.opponents);
+
+    
+//   $('.games-container').append(gameContainer);
 //   $('.game-container').append(gameItem);
-//   $('.games-contaner').append(gameContainer);
+//   $('.game-item').append(gameLink);
+//   $('.game-link').append(opponentsContainer);
+//   $('.opponents-container').append(opponents);
 // }
 
 // loop through the team roster
