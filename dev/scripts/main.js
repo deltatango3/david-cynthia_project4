@@ -24,6 +24,7 @@ app.getData = () => {
   })
   .then((data) => {
     app.displayTeam(data.teams);
+    app.addMobileMenuItems(data.teams);
   })
 }
 
@@ -33,13 +34,14 @@ app.getData = () => {
 // - class of team-name 
 // - the li contains text, team.name
 app.displayTeam = (teams) => {
-  console.log(teams)
   //Sort team alphabetically
-  teams.sort(function (a, b) {
-    let alc = a.name.toLowerCase(),
-      blc = b.name.toLowerCase();
-    return alc > blc ? 1 : alc < blc ? -1 : 0;
-  });
+  app.sortArrayObjects(teams);
+
+  // teams.sort(function (a, b) {
+  //   let alc = a.name.toLowerCase(),
+  //     blc = b.name.toLowerCase();
+  //   return alc > blc ? 1 : alc < blc ? -1 : 0;
+  // });
 
   teams.forEach((team) => {
     const teamContainer = $('<li>').addClass('team-container').attr('data-id', team.id).attr('data-team-name', team.name);
@@ -54,6 +56,28 @@ app.displayTeam = (teams) => {
   })
 }; 
 
+app.sortArrayObjects = (arrayObjects) => {
+  arrayObjects.sort(function (a, b) {
+    let alc = a.name.toLowerCase(),
+      blc = b.name.toLowerCase();
+    return alc > blc ? 1 : alc < blc ? -1 : 0;
+  });
+}
+app.addMobileMenuItems = (teams) => {
+ app.sortArrayObjects(teams);
+ 
+ teams.forEach((team) => {
+  const teamContainer = $('<li>').addClass('team-container').attr('data-id', team.id).attr('data-team-name', team.name);
+  const teamItem = $('<button>').addClass('team');
+  const teamImageContainer = $('<div>').addClass('team-image-container');
+  const teamImage = $('<img>').addClass('team-image').attr('src', `public/images/logo-${team.id}.png`);
+  const teamName = $('<p>').attr('data-id', team.id).attr('data-team-name', team.name).addClass('team-name').text(team.shortName);
+  $(teamImageContainer).append(teamImage);
+  $(teamItem).append(teamImageContainer, teamName);
+  $(teamContainer).append(teamItem)
+  $('.nav-menu').append(teamContainer);
+ })
+}
 // When I click a team, load the roster for that team. I need to get and store the ID from the data-id when I click the team.
 // make an ajax call to grab the roster information of the specific team
 // pass data (player names) to displayTeamRoster
@@ -230,9 +254,17 @@ app.getPlayerID = () => {
   })
 }
 
+app.mobileNavToggle = () => {
+  $('.nav-menu').hide();
+  $('.burger-menu-icon').on('click', function() {
+  $('.nav-menu').slideToggle(300);
+  })
+}
+
 app.events = () => {
   app.getTeamID();
   app.getPlayerID();
+  app.mobileNavToggle();
 };
 
 app.init = () => {

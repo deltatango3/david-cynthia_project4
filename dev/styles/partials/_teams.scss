@@ -13,7 +13,9 @@
     display: flex;
     flex-wrap: wrap;
   }
-  & .team-container {
+}
+
+.team-container {
   flex: 0 0 50%;
   align-items: center;
   display: flex;
@@ -33,9 +35,8 @@
     padding: 1rem .5rem 1rem 1rem;
     width: 100%;
   }
-  & .team-image-container {
+  .team-image-container {
     width: 20px;
     margin-right: 10px;
   }
-}
 }
