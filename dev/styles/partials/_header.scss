@@ -1,8 +1,10 @@
 nav {
   background: #fff;
   color: $black;
+  display: flex;
   & .nav-menu-container {
     padding: 1rem 0;
+    flex: 0 0 90%;
   }
   & .wrapper {
     display: flex;

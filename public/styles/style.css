@@ -202,9 +202,11 @@ img {
 
 nav {
   background: #fff;
-  color: #292F36; }
+  color: #292F36;
+  display: flex; }
   nav .nav-menu-container {
-    padding: 1rem 0; }
+    padding: 1rem 0;
+    flex: 0 0 90%; }
   nav .wrapper {
     display: flex;
     justify-content: flex-end; }
