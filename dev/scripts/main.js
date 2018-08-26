@@ -112,7 +112,7 @@ app.aggregateGameData = (data) => {
   data = data._embedded.events;
 
   data.forEach((data) => {
-    const gameLink = $('<a>').addClass('game-link').attr('href', data.url);
+    const gameLink = $('<a>').addClass('game-link').attr('href', data.url).attr('target', '_blank');
     const opponentsContainer = $('<div>').addClass('opponents-container');
     const opponents = $('<p>').text(data.name);
     const gameInfoContainer = $('<div>').addClass('game-info-container');
