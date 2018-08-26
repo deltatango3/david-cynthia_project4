@@ -296,9 +296,6 @@ nav {
       background: #8e27ba; }
     .roster-list .player-info:hover .player {
       color: #fff; }
-    @media (min-width: 600px) {
-      .roster-list .player-info {
-        flex-basis: calc(50% - 2.5px); } }
     .roster-list .player-info .player {
       display: flex;
       flex: 1 0 100%;
