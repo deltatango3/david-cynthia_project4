@@ -260,7 +260,6 @@ app.getTeamID = () => {
     app.chosenTeamName = $(this).data('team-name');
     // app.getTeamRoster(id);
     getRosterAndGameData(teamID);
-    $('.menu-icon').toggleClass('open');
     // app.getGameData();
   })
 }
@@ -289,6 +288,10 @@ app.events = () => {
   app.getTeamID();
   app.getPlayerID();
   app.mobileNavToggle();
+
+  $('.nav-menu').on('click', '.team-container', function() {
+    $('.menu-icon').toggleClass('open');
+  })
 };
 
 app.init = () => {
