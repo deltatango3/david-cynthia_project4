@@ -163,6 +163,11 @@ h1 {
   font-size: 1.2rem;
   text-transform: uppercase; }
 
+.season-stats {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.4rem;
+  text-transform: uppercase; }
+
 h1, ul, p {
   margin: 0;
   padding: 0; }
@@ -303,6 +308,19 @@ nav {
       transition: all 300ms ease-in; }
       .roster-list .player-info .player span, .roster-list .player-info .player .player-name, .roster-list .player-info .player .player-number {
         padding: 1rem .5rem 1rem 0; }
+    .roster-list .player-info .accordion-content-container {
+      display: flex;
+      flex-wrap: wrap; }
+    .roster-list .player-info .season-stats {
+      flex: 1 0 calc(100% - 10px);
+      margin: 5px;
+      padding: 20px;
+      border: solid #d1d7db 0.1px; }
+      .roster-list .player-info .season-stats p {
+        margin: 5px 0; }
+      @media (min-width: 600px) {
+        .roster-list .player-info .season-stats {
+          flex-basis: 30%; } }
     .roster-list .player-info span {
       flex: 1 0 15%; }
     .roster-list .player-info .player-number {

@@ -162,7 +162,6 @@ app.displayTeamRoster = (roster) => {
     const playerNumber = $('<span>').text(players.jerseyNumber);
     const playerPosition = $('<p>').addClass('player-number').attr("data-pos", players.position.name).text(players.position.code);
     playerInfoButtonContainer.append(playerNumber, playerPosition, playerName);
-    // playerAccordionContentContainer.append(fakeData);
     playerInfo.append(playerInfoButtonContainer, app.playerAccordionContentContainer);
     $('.roster-list').append(playerInfo);
   })
@@ -193,14 +192,16 @@ app.getPlayerStats = (season) => {
 app.displayGoalieStats = (player) => {
   app.addHideClass('.roster-list');
   // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts
+  console.log(player)
   const playerSeasonStatContainer = $('<div>').addClass('season-stats').attr('data-season', app.currentSeason); 
   const playerSavePercentage = $('<p>').text(`Save Percentage: ${player.savePercentage}`);
   const playerWins = $('<p>').text(`Wins: ${player.wins}`);
-  const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalsAgainstAverage}`);
+  const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalAgainstAverage}`);
   const playerGames = $('<p>').text(`Games Played: ${player.games}`);
   const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
   $(playerSeasonStatContainer).append(playerSavePercentage, playerWins, playerGoalsAgainstAverage, playerGames, playerShutouts);
-  $('.stats').append(playerSeasonStatContainer);
+  $(`#${app.playerID}`).append(playerSeasonStatContainer);
+  // $('.stats').append(playerSeasonStatContainer);
 }
 
 // hide roster list
@@ -217,7 +218,7 @@ app.displayPlayerStats = (player) => {
   const playerPlusMinus = $('<p>').text(`+-: ${player.plusMinus}`);
   $(playerSeasonStatContainer).append(playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus).prepend(app.seasonYear);
   
-  $('.stats').append(playerSeasonStatContainer);
+  // $('.stats').append(playerSeasonStatContainer);
   console.log(app.playerID);
   $(`#${app.playerID}`).append(playerSeasonStatContainer);
 
