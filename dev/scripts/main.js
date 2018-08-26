@@ -186,6 +186,7 @@ app.getPlayerStats = (season) => {
   .then((playerStats) => {
     const statList = playerStats.stats[0].splits[0].stat;
     app.currentSeason = season;
+  
     if (app.playerPosition === 'Goalie') {
       app.displayGoalieStats(statList);
     } else {
@@ -236,7 +237,6 @@ app.displayPlayerStats = (player) => {
 app.accordion = () => {
   $(".accordion").accordion({
     collapsible: true,
-    active: false,
     header: 'button',
     heightStyle: "content",
   });
