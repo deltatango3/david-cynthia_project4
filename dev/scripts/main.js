@@ -131,6 +131,7 @@ app.aggregateGameData = (data) => {
 async function getRosterAndGameData(id) {
   app.teamRoster = await app.getTeamRoster(id);
   app.gameData  = await app.getGameData();
+  console.log(app.teamRoster.roster);
   app.displayTeamRoster(app.teamRoster.roster)
   app.aggregateGameData(app.gameData);
 }
