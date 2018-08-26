@@ -116,8 +116,8 @@ app.aggregateGameData = (data) => {
     const opponentsContainer = $('<div>').addClass('opponents-container');
     const opponents = $('<p>').text(data.name);
     const gameInfoContainer = $('<div>').addClass('game-info-container');
-    const gameDate = $('<p>').text(data.dates.start.localDate);
-    const gameTime = $('<p>').text(data.dates.start.localTime);
+    const gameDate = $('<p>').addClass('game-date').text(data.dates.start.localDate);
+    const gameTime = $('<p>').addClass('game-time').text(data.dates.start.localTime);
     const buyNow = $('<p>').addClass('buy-now').text('Buy Now')
 
     opponentsContainer.append(opponents);
@@ -145,7 +145,6 @@ async function getRosterAndGameData(id) {
 
 app.displayTeamRoster = (roster) => {
   //Sorting the roster by alphabetical order;
-  $('.roster').prepend(`<h2>${app.chosenTeamName}</h2>`);
   roster.sort(function (a, b) {
     let alc = a.person.fullName.toLowerCase(),
       blc = b.person.fullName.toLowerCase();

@@ -149,7 +149,15 @@ h1 {
   letter-spacing: 2px; }
 
 .team-name {
+  font-size: 1.4rem;
+  text-transform: uppercase; }
+
+.game-link {
   font-size: 1.4rem; }
+
+.roster-list .player-info .player {
+  font-size: 1.2rem;
+  text-transform: uppercase; }
 
 h1, ul, p {
   margin: 0;
@@ -159,7 +167,8 @@ ul {
   list-style-type: none; }
 
 a {
-  text-decoration: none; }
+  text-decoration: none;
+  color: inherit; }
 
 button {
   border: none;
@@ -244,7 +253,8 @@ nav {
   flex: 0 0 50%;
   align-items: center;
   display: flex;
-  transition: all 300ms ease-in; }
+  transition: all 300ms ease-in;
+  padding: 1rem .5rem 1rem 1rem; }
   @media (min-width: 600px) {
     .team-container {
       flex-basis: 33%; } }
@@ -259,7 +269,6 @@ nav {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    padding: 1rem .5rem 1rem 1rem;
     width: 100%; }
   .team-container .team-image-container {
     width: 20px;
@@ -284,12 +293,14 @@ nav {
       color: #fff; }
     @media (min-width: 600px) {
       .roster-list .player-info {
-        flex-basis: calc(50% - 5px); } }
+        flex-basis: calc(50% - 2.5px); } }
     .roster-list .player-info .player {
       display: flex;
       flex: 1 0 100%;
       padding: 1rem .5rem 1rem;
       transition: all 300ms ease-in; }
+      .roster-list .player-info .player span, .roster-list .player-info .player .player-name, .roster-list .player-info .player .player-number {
+        padding: 1rem .5rem 1rem 0; }
     .roster-list .player-info span {
       flex: 1 0 15%; }
     .roster-list .player-info .player-number {
@@ -298,3 +309,42 @@ nav {
     .roster-list .player-info .player-name {
       flex: 1 0 70%;
       display: flex; }
+
+.games-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 3rem; }
+
+.game-link {
+  background-color: #292F36;
+  color: #f1f7ed;
+  padding: 1rem;
+  border: .1px solid silver;
+  flex-wrap: wrap;
+  display: none;
+  flex: 1 0 100%; }
+  @media (min-width: 800px) {
+    .game-link {
+      display: flex;
+      flex-basis: 20%; } }
+  .game-link:nth-child(1) {
+    display: flex; }
+  .game-link .opponents-container {
+    flex: 1 0 100%;
+    text-align: center;
+    margin-bottom: 10px; }
+  .game-link .game-info-container {
+    flex: 1 0 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px; }
+    .game-link .game-info-container .game-date {
+      flex: 1 0 100%;
+      text-align: center;
+      margin-bottom: 10px; }
+    .game-link .game-info-container .game-time {
+      flex: 1 0 100%;
+      text-align: center; }
+  .game-link .buy-now {
+    flex: 1 0 100%;
+    text-align: center; }
