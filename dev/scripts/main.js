@@ -271,8 +271,9 @@ app.getPlayerID = () => {
 
 app.mobileNavToggle = () => {
   $('.nav-menu').hide();
-  $('.burger-menu-icon').on('click', function() {
-  $('.nav-menu').slideToggle(300);
+  $('.menu-icon').on('click', function() {
+    $(this).toggleClass('open');
+    $('.nav-menu').slideToggle(300);
   })
 }
 
