@@ -17,10 +17,7 @@
     &:hover .player {
       color: #fff;
     }
-<<<<<<< HEAD
-=======
     
->>>>>>> 80faf5cd6b0c2cff8e2dea23cf9d4e3a36e08bdd
     & .player {
       display: flex;
       flex: 1 0 100%;
@@ -43,8 +40,7 @@
         margin: 5px 0;
       }
       @media (min-width: $tablet) {
-      flex-basis:30%;
-      
+        flex-basis:30%;
       }
     }
     & span {

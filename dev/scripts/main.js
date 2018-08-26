@@ -223,7 +223,7 @@ app.displayPlayerStats = (player) => {
   const playerPlusMinus = $('<p>').text(`+-: ${player.plusMinus}`);
   $(playerSeasonStatContainer).append(playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus).prepend(app.seasonYear);
   
-    $(`#${app.playerID}`).append(playerSeasonStatContainer);
+  $(`#${app.playerID}`).append(playerSeasonStatContainer);
 
   // if ($('.season-stats').data('season') === 20172018) {
   //   $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
@@ -240,8 +240,6 @@ app.accordion = () => {
     heightStyle: "content",
   });
 }
-
-
 
 app.updateHeader = (heading) => {
   $('header .hero h1').text(heading)
@@ -272,13 +270,9 @@ app.getPlayerID = () => {
   $('.roster-list').on('click', '.player-info', function() {
     app.playerID = $(this).data('id');
     app.playerPosition = $(this).data('pos');
-
+    app.seasons.map(app.getPlayerStats);
     $(`#${app.playerID}`).empty();
     app.accordion();
-    app.seasons.map(app.getPlayerStats);
-    
-      
-    
   })
 }
 
