@@ -47,7 +47,7 @@ app.displayTeam = (teams) => {
     const teamContainer = $('<li>').addClass('team-container').attr('data-id', team.id).attr('data-team-name', team.name);
     const teamItem = $('<button>').addClass('team');
     const teamImageContainer = $('<div>').addClass('team-image-container');
-    const teamImage = $('<img>').addClass('team-image').attr('src', `public/images/logo-${team.id}.png`);
+    const teamImage = $('<img>').addClass('team-image').attr('src', `public/images/logo-${team.id}.png`).attr('alt', `${team.name} logo`);
     const teamName = $('<p>').attr('data-id', team.id).attr('data-team-name', team.name).addClass('team-name').text(team.shortName);
     $(teamImageContainer).append(teamImage);
     $(teamItem).append(teamImageContainer, teamName);
@@ -101,7 +101,7 @@ app.getGameData = () => {
       apikey: app.ticketmasterApiKey,
       keyword: app.chosenTeamName,
       sort: 'date,asc',
-      size: "5",
+      size: "3",
       classificationName: 'NHL'
     }
   })
@@ -112,7 +112,7 @@ app.aggregateGameData = (data) => {
   data = data._embedded.events;
 
   data.forEach((data) => {
-    const gameLink = $('<a>').addClass('game-link').attr('href', data.url);
+    const gameLink = $('<a>').addClass('game-link').attr('href', data.url).attr('target', '_blank');
     const opponentsContainer = $('<div>').addClass('opponents-container');
     const opponents = $('<p>').text(data.name);
     const gameInfoContainer = $('<div>').addClass('game-info-container');
@@ -146,6 +146,11 @@ async function getRosterAndGameData(id) {
 
 app.displayTeamRoster = (roster) => {
   //Sorting the roster by alphabetical order;
+  $('.chosen-team-page').removeClass('hide');
+  $('.games-container').empty();
+  $('.roster-list').empty();
+  $('.nav-menu').hide();
+  
   roster.sort(function (a, b) {
     let alc = a.person.fullName.toLowerCase(),
       blc = b.person.fullName.toLowerCase();
@@ -181,6 +186,7 @@ app.getPlayerStats = (season) => {
   .then((playerStats) => {
     const statList = playerStats.stats[0].splits[0].stat;
     app.currentSeason = season;
+  
     if (app.playerPosition === 'Goalie') {
       app.displayGoalieStats(statList);
     } else {
@@ -220,7 +226,7 @@ app.displayPlayerStats = (player) => {
   const playerPlusMinus = $('<p>').text(`+-: ${player.plusMinus}`);
   $(playerSeasonStatContainer).append(playerSeason,playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus);
   
-    $(`#${app.playerID}`).append(playerSeasonStatContainer);
+  $(`#${app.playerID}`).append(playerSeasonStatContainer);
 
   // if ($('.season-stats').data('season') === 20172018) {
   //   $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
@@ -231,13 +237,10 @@ app.displayPlayerStats = (player) => {
 app.accordion = () => {
   $(".accordion").accordion({
     collapsible: true,
-    active: false,
     header: 'button',
     heightStyle: "content",
   });
 }
-
-
 
 app.updateHeader = (heading) => {
   $('header .hero h1').text(heading)
@@ -258,6 +261,7 @@ app.getTeamID = () => {
     app.chosenTeamName = $(this).data('team-name');
     // app.getTeamRoster(id);
     getRosterAndGameData(teamID);
+    $('.menu-icon').toggleClass('open');
     // app.getGameData();
   })
 }
@@ -268,18 +272,17 @@ app.getPlayerID = () => {
   $('.roster-list').on('click', '.player-info', function() {
     app.playerID = $(this).data('id');
     app.playerPosition = $(this).data('pos');
-
-    $(`#${app.playerID}`).empty();
-    // app.accordion();
     app.seasons.map(app.getPlayerStats);
-
+    $(`#${app.playerID}`).empty();
+    app.accordion();
   })
 }
 
 app.mobileNavToggle = () => {
   $('.nav-menu').hide();
-  $('.burger-menu-icon').on('click', function() {
-  $('.nav-menu').slideToggle(300);
+  $('.menu-icon').on('click', function() {
+    $(this).toggleClass('open');
+    $('.nav-menu').slideToggle(300);
   })
 }
 

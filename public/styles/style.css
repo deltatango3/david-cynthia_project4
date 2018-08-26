@@ -166,8 +166,14 @@ h1 {
 .season-stats {
   text-transform: uppercase; }
 
+.opponents-container {
+  font-weight: 600; }
+
 .player-season {
   font-weight: 600; }
+
+body {
+  background: #f1f7ed; }
 
 h1, ul, p {
   margin: 0;
@@ -192,13 +198,13 @@ img {
   max-width: 1080px;
   margin: 0 auto; }
 
-.hide {
-  display: none; }
-
 .container {
   background-color: #f1f7ed;
   display: flex;
   justify-content: center; }
+
+.hide {
+  display: none; }
 
 .section-main {
   background-color: #fff;
@@ -208,9 +214,11 @@ img {
 
 nav {
   background: #fff;
-  color: #292F36; }
+  color: #292F36;
+  display: flex; }
   nav .nav-menu-container {
-    padding: 1rem 0; }
+    padding: 1rem 0;
+    flex: 0 0 90%; }
   nav .wrapper {
     display: flex;
     justify-content: flex-end; }
@@ -221,7 +229,73 @@ nav {
     display: flex;
     flex-wrap: wrap;
     position: absolute;
+    top: 36.5px;
     border-bottom: 3px solid #8e27ba; }
+
+.menu-icon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .5s ease-in-out;
+  -moz-transition: .5s ease-in-out;
+  -o-transition: .5s ease-in-out;
+  transition: .5s ease-in-out;
+  cursor: pointer; }
+
+.menu-icon span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background: #8e27ba;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out; }
+
+/* Icon 3 */
+.menu-icon span:nth-child(1) {
+  top: 0px; }
+
+.menu-icon span:nth-child(2),
+.menu-icon span:nth-child(3) {
+  top: 8px; }
+
+.menu-icon span:nth-child(4) {
+  top: 16px; }
+
+.menu-icon.open span:nth-child(1) {
+  top: 10px;
+  width: 0%;
+  left: 50%; }
+
+.menu-icon.open span:nth-child(2) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
+.menu-icon.open span:nth-child(3) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg); }
+
+.menu-icon.open span:nth-child(4) {
+  top: 18px;
+  width: 0%;
+  left: 50%; }
 
 .home-page .hero {
   display: flex;
@@ -243,7 +317,11 @@ nav {
   background-color: #8e27ba;
   padding: 4rem 6rem;
   color: #f1f7ed;
-  margin-top: 8rem; }
+  margin-top: 8rem;
+  transition: all 300ms ease; }
+  .hero-cta:hover {
+    background-color: #f1f7ed;
+    color: #8e27ba; }
 
 .teams-container {
   background-color: #f1f7ed;
@@ -331,6 +409,12 @@ nav {
       flex: 1 0 70%;
       display: flex; }
 
+.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-s {
+  display: none; }
+
+.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-e {
+  display: none; }
+
 .games-container {
   display: flex;
   flex-wrap: wrap;
@@ -339,11 +423,15 @@ nav {
 .game-link {
   background-color: #292F36;
   color: #f1f7ed;
-  padding: 1rem;
+  padding: 1rem 0 0;
   border: .1px solid silver;
   flex-wrap: wrap;
   display: none;
-  flex: 1 0 100%; }
+  flex: 1 0 100%;
+  transition: all 300ms ease; }
+  .game-link:hover .buy-now {
+    background-color: #fff;
+    color: #8e27ba; }
   @media (min-width: 800px) {
     .game-link {
       display: flex;
@@ -353,7 +441,8 @@ nav {
   .game-link .opponents-container {
     flex: 1 0 100%;
     text-align: center;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    padding: 0 .5rem; }
   .game-link .game-info-container {
     flex: 1 0 100%;
     display: flex;
@@ -368,4 +457,7 @@ nav {
       text-align: center; }
   .game-link .buy-now {
     flex: 1 0 100%;
-    text-align: center; }
+    text-align: center;
+    padding: .5rem;
+    background-color: #8e27ba;
+    transition: all 300ms ease; }
