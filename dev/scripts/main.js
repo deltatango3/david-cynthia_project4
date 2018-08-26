@@ -201,7 +201,6 @@ app.displayGoalieStats = (player) => {
   const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
   $(playerSeasonStatContainer).append(playerSavePercentage, playerWins, playerGoalsAgainstAverage, playerGames, playerShutouts);
   $(`#${app.playerID}`).append(playerSeasonStatContainer);
-  // $('.stats').append(playerSeasonStatContainer);
 }
 
 // hide roster list
@@ -218,16 +217,32 @@ app.displayPlayerStats = (player) => {
   const playerPlusMinus = $('<p>').text(`+-: ${player.plusMinus}`);
   $(playerSeasonStatContainer).append(playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus).prepend(app.seasonYear);
   
-  // $('.stats').append(playerSeasonStatContainer);
-  console.log(app.playerID);
-  $(`#${app.playerID}`).append(playerSeasonStatContainer);
+    $(`#${app.playerID}`).append(playerSeasonStatContainer);
 
-  if ($('.season-stats').data('season') === 20172018) {
-    $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
-  };
+  // if ($('.season-stats').data('season') === 20172018) {
+  //   $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
+  // };
+
+  console.log('display player stats')
+
+ 
   
 
 }
+
+app.accordion = () => {
+  console.log('accordion');
+
+  $(".accordion").accordion({
+
+    collapsible: true,
+    active: false,
+    header: 'button',
+    heightStyle: "content",
+  });
+}
+
+
 
 app.updateHeader = (heading) => {
   $('header .hero h1').text(heading)
@@ -258,8 +273,9 @@ app.getPlayerID = () => {
   $('.roster-list').on('click', '.player-info', function() {
     app.playerID = $(this).data('id');
     app.playerPosition = $(this).data('pos');
+    app.accordion();
     app.seasons.map(app.getPlayerStats);
-    console.log(this);
+    
       
     
   })
