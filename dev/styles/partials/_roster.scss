@@ -1,3 +1,40 @@
-.player-info {
+.roster-list {
   display: flex;
+  flex-wrap: wrap;
+  & .player-info {
+    display: flex;
+    flex: 0 0 100%;
+    transition: all 300ms ease-in;
+    border: .1px solid $silver;
+    margin-bottom: 10px;
+    &:nth-child(odd) {
+      margin-right: 5px;
+    }
+    &:hover {
+      background: $accent;
+    }
+    &:hover .player {
+      color: #fff;
+    }
+    @media (min-width: $tablet) {
+      flex-basis: calc(50% - 5px);
+    }
+    & .player {
+      display: flex;
+      flex: 1 0 100%;
+      padding: 1rem .5rem 1rem; 
+      transition: all 300ms ease-in;
+    }
+    & span {
+      flex: 1 0 15%;
+    }
+    & .player-number {
+      flex: 1 0 15%;
+      display: flex;
+    }
+    & .player-name {
+      flex: 1 0 70%;
+      display: flex;
+    }
+  }
 }

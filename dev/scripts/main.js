@@ -155,10 +155,12 @@ app.displayTeamRoster = (roster) => {
   roster.forEach((players) => {
     const playerInfo = $('<li>').addClass('player-info').attr('data-id', players.person.id)
     .attr('data-pos', players.position.name).attr('data-name', players.person.fullName).attr('data-number', players.jerseyNumber);
-    const playerName = $('<p>').text(players.person.fullName);
+    const playerInfoButtonContainer = $('<button>').addClass('player');
+    const playerName = $('<p>').addClass('player-name').text(players.person.fullName);
     const playerNumber = $('<span>').text(players.jerseyNumber);
-    const playerPosition = $('<p>').attr("data-pos", players.position.name).text(players.position.code);
-    playerInfo.append(playerNumber, playerPosition, playerName);
+    const playerPosition = $('<p>').addClass('player-number').attr("data-pos", players.position.name).text(players.position.code);
+    playerInfoButtonContainer.append(playerNumber, playerPosition, playerName);
+    playerInfo.append(playerInfoButtonContainer)
     $('.roster-list').append(playerInfo);
   })
 
