@@ -126,4 +126,10 @@ nav {
   padding: 4rem 6rem;
   color: $white;
   margin-top: 8rem;
+  transition: all 300ms ease;
+  &:hover {
+    background-color: $white;
+    color: $accent;
+  }
 }
+

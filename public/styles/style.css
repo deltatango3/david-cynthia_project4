@@ -168,6 +168,15 @@ h1 {
   font-size: 1.4rem;
   text-transform: uppercase; }
 
+.opponents-container {
+  font-weight: 600; }
+
+.buy-now {
+  font-weight: 600; }
+
+body {
+  background: #f1f7ed; }
+
 h1, ul, p {
   margin: 0;
   padding: 0; }
@@ -310,7 +319,11 @@ nav {
   background-color: #8e27ba;
   padding: 4rem 6rem;
   color: #f1f7ed;
-  margin-top: 8rem; }
+  margin-top: 8rem;
+  transition: all 300ms ease; }
+  .hero-cta:hover {
+    background-color: #f1f7ed;
+    color: #8e27ba; }
 
 .teams-container {
   background-color: #f1f7ed;
@@ -398,6 +411,12 @@ nav {
       flex: 1 0 70%;
       display: flex; }
 
+.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-s {
+  display: none; }
+
+.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-e {
+  display: none; }
+
 .games-container {
   display: flex;
   flex-wrap: wrap;
@@ -406,11 +425,15 @@ nav {
 .game-link {
   background-color: #292F36;
   color: #f1f7ed;
-  padding: 1rem;
+  padding: 1rem 0 0;
   border: .1px solid silver;
   flex-wrap: wrap;
   display: none;
-  flex: 1 0 100%; }
+  flex: 1 0 100%;
+  transition: all 300ms ease; }
+  .game-link:hover .buy-now {
+    background-color: #fff;
+    color: #8e27ba; }
   @media (min-width: 800px) {
     .game-link {
       display: flex;
@@ -420,7 +443,8 @@ nav {
   .game-link .opponents-container {
     flex: 1 0 100%;
     text-align: center;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    padding: 0 .5rem; }
   .game-link .game-info-container {
     flex: 1 0 100%;
     display: flex;
@@ -435,4 +459,7 @@ nav {
       text-align: center; }
   .game-link .buy-now {
     flex: 1 0 100%;
-    text-align: center; }
+    text-align: center;
+    padding: .5rem;
+    background-color: #8e27ba;
+    transition: all 300ms ease; }

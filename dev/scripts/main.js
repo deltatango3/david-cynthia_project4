@@ -47,7 +47,7 @@ app.displayTeam = (teams) => {
     const teamContainer = $('<li>').addClass('team-container').attr('data-id', team.id).attr('data-team-name', team.name);
     const teamItem = $('<button>').addClass('team');
     const teamImageContainer = $('<div>').addClass('team-image-container');
-    const teamImage = $('<img>').addClass('team-image').attr('src', `public/images/logo-${team.id}.png`);
+    const teamImage = $('<img>').addClass('team-image').attr('src', `public/images/logo-${team.id}.png`).attr('alt', `${team.name} logo`);
     const teamName = $('<p>').attr('data-id', team.id).attr('data-team-name', team.name).addClass('team-name').text(team.shortName);
     $(teamImageContainer).append(teamImage);
     $(teamItem).append(teamImageContainer, teamName);
@@ -101,7 +101,7 @@ app.getGameData = () => {
       apikey: app.ticketmasterApiKey,
       keyword: app.chosenTeamName,
       sort: 'date,asc',
-      size: "5",
+      size: "3",
       classificationName: 'NHL'
     }
   })
@@ -260,6 +260,7 @@ app.getTeamID = () => {
     app.chosenTeamName = $(this).data('team-name');
     // app.getTeamRoster(id);
     getRosterAndGameData(teamID);
+    $('.menu-icon').toggleClass('open');
     // app.getGameData();
   })
 }
