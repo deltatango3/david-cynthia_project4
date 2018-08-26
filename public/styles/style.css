@@ -285,6 +285,7 @@ nav {
   flex-wrap: wrap; }
   .roster-list .player-info {
     display: flex;
+    flex-direction: column;
     flex: 0 0 100%;
     transition: all 300ms ease-in;
     border: 0.1px solid #d1d7db;

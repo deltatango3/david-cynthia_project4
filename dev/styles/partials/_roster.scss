@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   & .player-info {
     display: flex;
+    flex-direction: column;
     flex: 0 0 100%;
     transition: all 300ms ease-in;
     border: .1px solid $silver;
