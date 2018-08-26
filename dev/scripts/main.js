@@ -131,6 +131,7 @@ app.aggregateGameData = (data) => {
 async function getRosterAndGameData(id) {
   app.teamRoster = await app.getTeamRoster(id);
   app.gameData  = await app.getGameData();
+  // console.log(app.teamRoster.roster);
   app.displayTeamRoster(app.teamRoster.roster)
   app.aggregateGameData(app.gameData);
 }
@@ -152,14 +153,17 @@ app.displayTeamRoster = (roster) => {
   });
 
   roster.forEach((players) => {
-    const playerInfo = $('<li>').addClass('player-info').attr('data-id', players.person.id)
+    const playerInfo = $('<li>').addClass('player-info accordion').attr('data-id', players.person.id)
     .attr('data-pos', players.position.name).attr('data-name', players.person.fullName).attr('data-number', players.jerseyNumber);
     const playerInfoButtonContainer = $('<button>').addClass('player');
+    app.playerAccordionContentContainer = $('<div>').addClass('accordion-content-container').attr('id', players.person.id);
+    // const fakeData = $('<p>').text('fake data fake data')
     const playerName = $('<p>').addClass('player-name').text(players.person.fullName);
     const playerNumber = $('<span>').text(players.jerseyNumber);
     const playerPosition = $('<p>').addClass('player-number').attr("data-pos", players.position.name).text(players.position.code);
     playerInfoButtonContainer.append(playerNumber, playerPosition, playerName);
-    playerInfo.append(playerInfoButtonContainer)
+    // playerAccordionContentContainer.append(fakeData);
+    playerInfo.append(playerInfoButtonContainer, app.playerAccordionContentContainer);
     $('.roster-list').append(playerInfo);
   })
 
@@ -203,7 +207,7 @@ app.displayGoalieStats = (player) => {
 // display goalie stats else display other play stats
 app.displayPlayerStats = (player) => {
   app.addHideClass('.roster-list');
-
+  
   const playerSeasonStatContainer = $('<div>').addClass('season-stats').attr('data-season', app.currentSeason);
   const playerAssists = $('<p>').text(`assists: ${player.assists}`);
   const playerGoals = $('<p>').text(`goals: ${player.goals}`);
@@ -214,10 +218,13 @@ app.displayPlayerStats = (player) => {
   $(playerSeasonStatContainer).append(playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus).prepend(app.seasonYear);
   
   $('.stats').append(playerSeasonStatContainer);
+  console.log(app.playerID);
+  $(`#${app.playerID}`).append(playerSeasonStatContainer);
 
   if ($('.season-stats').data('season') === 20172018) {
     $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
   };
+  
 
 }
 
@@ -251,6 +258,8 @@ app.getPlayerID = () => {
     app.playerID = $(this).data('id');
     app.playerPosition = $(this).data('pos');
     app.seasons.map(app.getPlayerStats);
+    console.log(this);
+      
     
   })
 }
