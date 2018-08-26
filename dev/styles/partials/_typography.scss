@@ -30,21 +30,20 @@ h1 {
   font-family: $main;
 }
 
-.roster-list .player-info .player {
+.roster-list .player-info .player, .season-stats  {
   font-size: 1.2rem;
   text-transform: uppercase;
 }
 
 .season-stats {
-  font-family: $main;
-  font-size: 1.4rem;
+  // font-family: $main;
+  // font-size: 1.4rem;
   text-transform: uppercase;
 }
 
 .opponents-container {
   font-weight: 600;
 }
-
-.buy-now {
+.player-season {
   font-weight: 600;
 }

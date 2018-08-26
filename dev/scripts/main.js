@@ -200,12 +200,13 @@ app.displayGoalieStats = (player) => {
   // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts
   console.log(player)
   const playerSeasonStatContainer = $('<div>').addClass('season-stats').attr('data-season', app.currentSeason); 
+  const playerSeason = $('<p>').text(app.currentSeason);
   const playerSavePercentage = $('<p>').text(`Save Percentage: ${player.savePercentage}`);
   const playerWins = $('<p>').text(`Wins: ${player.wins}`);
   const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalAgainstAverage}`);
   const playerGames = $('<p>').text(`Games Played: ${player.games}`);
   const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
-  $(playerSeasonStatContainer).append(playerSavePercentage, playerWins, playerGoalsAgainstAverage, playerGames, playerShutouts);
+  $(playerSeasonStatContainer).append(playerSeason,playerSavePercentage, playerWins, playerGoalsAgainstAverage, playerGames, playerShutouts);
   $(`#${app.playerID}`).append(playerSeasonStatContainer);
 }
 
@@ -215,13 +216,14 @@ app.displayPlayerStats = (player) => {
   app.addHideClass('.roster-list');
   
   const playerSeasonStatContainer = $('<div>').addClass('season-stats').attr('data-season', app.currentSeason);
+  const playerSeason = $('<p>').addClass('player-season').text(app.currentSeason);
   const playerAssists = $('<p>').text(`assists: ${player.assists}`);
   const playerGoals = $('<p>').text(`goals: ${player.goals}`);
   const playerPoints = $('<p>').text(`points: ${player.points}`);
   const playerGames = $('<p>').text(`games played: ${player.games}`)
   const playerGameWinningGoals = $('<p>').text(`game winning goals: ${player.gameWinningGoals}`)
   const playerPlusMinus = $('<p>').text(`+-: ${player.plusMinus}`);
-  $(playerSeasonStatContainer).append(playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus).prepend(app.seasonYear);
+  $(playerSeasonStatContainer).append(playerSeason,playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus);
   
   $(`#${app.playerID}`).append(playerSeasonStatContainer);
 
@@ -233,9 +235,8 @@ app.displayPlayerStats = (player) => {
 
 app.accordion = () => {
   $(".accordion").accordion({
-
     collapsible: true,
-    // active: false,
+    active: false,
     header: 'button',
     heightStyle: "content",
   });

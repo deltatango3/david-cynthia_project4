@@ -8,14 +8,17 @@
     transition: all 300ms ease-in;
     border: .1px solid $silver;
     margin-bottom: 10px;
-    &:nth-child(odd) {
-      margin-right: 5px;
+    &:nth-child(even) {
+      background: $silver;
+      & .season-stats {
+        border: 0.1px solid #fff;
+      } 
     }
     &:hover {
-      background: $accent;
+      border: .1px solid $accent;
     }
     &:hover .player {
-      color: #fff;
+      // color: #fff;
     }
     
     & .player {
@@ -43,6 +46,9 @@
         flex-basis:30%;
       }
     }
+    // & .player-season {
+    //   font-weight:600;
+    // }
     & span {
       flex: 1 0 15%;
     }
