@@ -116,8 +116,8 @@ app.aggregateGameData = (data) => {
     const opponentsContainer = $('<div>').addClass('opponents-container');
     const opponents = $('<p>').text(data.name);
     const gameInfoContainer = $('<div>').addClass('game-info-container');
-    const gameDate = $('<p>').text(data.dates.start.localDate);
-    const gameTime = $('<p>').text(data.dates.start.localTime);
+    const gameDate = $('<p>').addClass('game-date').text(data.dates.start.localDate);
+    const gameTime = $('<p>').addClass('game-time').text(data.dates.start.localTime);
     const buyNow = $('<p>').addClass('buy-now').text('Buy Now')
 
     opponentsContainer.append(opponents);
@@ -146,7 +146,6 @@ async function getRosterAndGameData(id) {
 
 app.displayTeamRoster = (roster) => {
   //Sorting the roster by alphabetical order;
-  $('.roster').prepend(`<h2>${app.chosenTeamName}</h2>`);
   roster.sort(function (a, b) {
     let alc = a.person.fullName.toLowerCase(),
       blc = b.person.fullName.toLowerCase();
@@ -156,10 +155,12 @@ app.displayTeamRoster = (roster) => {
   roster.forEach((players) => {
     const playerInfo = $('<li>').addClass('player-info').attr('data-id', players.person.id)
     .attr('data-pos', players.position.name).attr('data-name', players.person.fullName).attr('data-number', players.jerseyNumber);
-    const playerName = $('<p>').text(players.person.fullName);
+    const playerInfoButtonContainer = $('<button>').addClass('player');
+    const playerName = $('<p>').addClass('player-name').text(players.person.fullName);
     const playerNumber = $('<span>').text(players.jerseyNumber);
-    const playerPosition = $('<p>').attr("data-pos", players.position.name).text(players.position.code);
-    playerInfo.append(playerNumber, playerName, playerPosition);
+    const playerPosition = $('<p>').addClass('player-number').attr("data-pos", players.position.name).text(players.position.code);
+    playerInfoButtonContainer.append(playerNumber, playerPosition, playerName);
+    playerInfo.append(playerInfoButtonContainer)
     $('.roster-list').append(playerInfo);
   })
 

@@ -9,6 +9,8 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 3px;
   text-align: center;
+  font-family: $heading;
+  font-size: 5rem;
 }
 
 .hero-cta {
@@ -19,4 +21,16 @@ h1 {
 
 .team-name {
   font-size: 1.4rem;
+  text-transform: uppercase;
+  font-family: $main;
+}
+
+.game-link {
+  font-size: 1.4rem;
+  font-family: $main;
+}
+
+.roster-list .player-info .player {
+  font-size: 1.2rem;
+  text-transform: uppercase;
 }
