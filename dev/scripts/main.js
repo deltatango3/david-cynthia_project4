@@ -167,7 +167,6 @@ app.displayTeamRoster = (roster) => {
     const playerNumber = $('<span>').text(players.jerseyNumber);
     const playerPosition = $('<p>').addClass('player-number').attr("data-pos", players.position.name).text(players.position.code);
     playerInfoButtonContainer.append(playerNumber, playerPosition, playerName);
-    // playerAccordionContentContainer.append(fakeData);
     playerInfo.append(playerInfoButtonContainer, app.playerAccordionContentContainer);
     $('.roster-list').append(playerInfo);
   })
@@ -198,14 +197,15 @@ app.getPlayerStats = (season) => {
 app.displayGoalieStats = (player) => {
   app.addHideClass('.roster-list');
   // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts
+  console.log(player)
   const playerSeasonStatContainer = $('<div>').addClass('season-stats').attr('data-season', app.currentSeason); 
   const playerSavePercentage = $('<p>').text(`Save Percentage: ${player.savePercentage}`);
   const playerWins = $('<p>').text(`Wins: ${player.wins}`);
-  const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalsAgainstAverage}`);
+  const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalAgainstAverage}`);
   const playerGames = $('<p>').text(`Games Played: ${player.games}`);
   const playerShutouts = $('<p>').text(`Shutouts: ${player.shutouts}`);
   $(playerSeasonStatContainer).append(playerSavePercentage, playerWins, playerGoalsAgainstAverage, playerGames, playerShutouts);
-  $('.stats').append(playerSeasonStatContainer);
+  $(`#${app.playerID}`).append(playerSeasonStatContainer);
 }
 
 // hide roster list
@@ -222,16 +222,32 @@ app.displayPlayerStats = (player) => {
   const playerPlusMinus = $('<p>').text(`+-: ${player.plusMinus}`);
   $(playerSeasonStatContainer).append(playerAssists, playerGoals, playerPoints, playerGames, playerGameWinningGoals, playerPlusMinus).prepend(app.seasonYear);
   
-  $('.stats').append(playerSeasonStatContainer);
-  console.log(app.playerID);
-  $(`#${app.playerID}`).append(playerSeasonStatContainer);
+    $(`#${app.playerID}`).append(playerSeasonStatContainer);
 
-  if ($('.season-stats').data('season') === 20172018) {
-    $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
-  };
+  // if ($('.season-stats').data('season') === 20172018) {
+  //   $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
+  // };
+
+  console.log('display player stats')
+
+ 
   
 
 }
+
+app.accordion = () => {
+  console.log('accordion');
+
+  $(".accordion").accordion({
+
+    collapsible: true,
+    active: false,
+    header: 'button',
+    heightStyle: "content",
+  });
+}
+
+
 
 app.updateHeader = (heading) => {
   $('header .hero h1').text(heading)
@@ -262,8 +278,9 @@ app.getPlayerID = () => {
   $('.roster-list').on('click', '.player-info', function() {
     app.playerID = $(this).data('id');
     app.playerPosition = $(this).data('pos');
+    app.accordion();
     app.seasons.map(app.getPlayerStats);
-    console.log(this);
+    
       
     
   })
