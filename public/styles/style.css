@@ -141,7 +141,9 @@ h1 {
   color: #f1f7ed;
   text-transform: uppercase;
   letter-spacing: 3px;
-  text-align: center; }
+  text-align: center;
+  font-family: "Exo 2", sans-serif;
+  font-size: 5rem; }
 
 .hero-cta {
   text-transform: uppercase;
@@ -150,10 +152,12 @@ h1 {
 
 .team-name {
   font-size: 1.4rem;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  font-family: "Open Sans", sans-serif; }
 
 .game-link {
-  font-size: 1.4rem; }
+  font-size: 1.4rem;
+  font-family: "Open Sans", sans-serif; }
 
 .roster-list .player-info .player {
   font-size: 1.2rem;
