@@ -9,7 +9,6 @@ app.seasons = ['20172018', '20162017','20152016' ];
 app.alphabeticalRoster = [];
 app.chosenTeamName;
 app.currentSeason = '';
-app.seasonYear;
 
 app.ticketmasterApiURL = 'https://app.ticketmaster.com/discovery/v2/events.json';
 app.ticketmasterApiKey = 'AabmVbCHA2zPjQoA1lb98cN1NQyuFGF4';
