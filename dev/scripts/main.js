@@ -201,7 +201,7 @@ app.displayGoalieStats = (player) => {
   // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts
   console.log(player)
   const playerSeasonStatContainer = $('<div>').addClass('season-stats').attr('data-season', app.currentSeason); 
-  const playerSeason = $('<p>').text(app.currentSeason);
+  const playerSeason = $('<p>').addClass('player-season').text(app.currentSeason);
   const playerSavePercentage = $('<p>').text(`Save Percentage: ${player.savePercentage}`);
   const playerWins = $('<p>').text(`Wins: ${player.wins}`);
   const playerGoalsAgainstAverage = $('<p>').text(`Goals Against Average: ${player.goalAgainstAverage}`);
