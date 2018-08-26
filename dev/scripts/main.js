@@ -196,6 +196,7 @@ app.getPlayerStats = (season) => {
 
 app.displayGoalieStats = (player) => {
   app.addHideClass('.roster-list');
+  
   // if goalie display: savePercentage, wins, goalsAgainstAverage, games played, shutouts
   console.log(player)
   const playerSeasonStatContainer = $('<div>').addClass('season-stats').attr('data-season', app.currentSeason); 
@@ -228,20 +229,13 @@ app.displayPlayerStats = (player) => {
   //   $('.seaon-stats:nth-child(1)').append('<div>2017 2018</div>');
   // };
 
-  console.log('display player stats')
-
- 
-  
-
 }
 
 app.accordion = () => {
-  console.log('accordion');
-
   $(".accordion").accordion({
 
     collapsible: true,
-    active: false,
+    // active: false,
     header: 'button',
     heightStyle: "content",
   });
@@ -278,6 +272,8 @@ app.getPlayerID = () => {
   $('.roster-list').on('click', '.player-info', function() {
     app.playerID = $(this).data('id');
     app.playerPosition = $(this).data('pos');
+
+    $(`#${app.playerID}`).empty();
     app.accordion();
     app.seasons.map(app.getPlayerStats);
     
