@@ -159,14 +159,15 @@ h1 {
   font-size: 1.4rem;
   font-family: "Open Sans", sans-serif; }
 
-.roster-list .player-info .player {
+.roster-list .player-info .player, .season-stats {
   font-size: 1.2rem;
   text-transform: uppercase; }
 
 .season-stats {
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.4rem;
   text-transform: uppercase; }
+
+.player-season {
+  font-weight: 600; }
 
 h1, ul, p {
   margin: 0;
@@ -295,12 +296,12 @@ nav {
     transition: all 300ms ease-in;
     border: 0.1px solid #d1d7db;
     margin-bottom: 10px; }
-    .roster-list .player-info:nth-child(odd) {
-      margin-right: 5px; }
+    .roster-list .player-info:nth-child(even) {
+      background: #d1d7db; }
+      .roster-list .player-info:nth-child(even) .season-stats {
+        border: 0.1px solid #fff; }
     .roster-list .player-info:hover {
-      background: #8e27ba; }
-    .roster-list .player-info:hover .player {
-      color: #fff; }
+      border: 0.1px solid #8e27ba; }
     .roster-list .player-info .player {
       display: flex;
       flex: 1 0 100%;
