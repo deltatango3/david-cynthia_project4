@@ -23,14 +23,14 @@ img {
   margin: 0 auto;
 }
 
-.hide {
-  display: none;
-}
-
 .container {
   background-color: $white;
   display: flex;
   justify-content: center;
+}
+
+.hide {
+  display: none;
 }
 
 .section-main {

@@ -16,9 +16,6 @@
     &:hover .player {
       color: #fff;
     }
-    @media (min-width: $tablet) {
-      flex-basis: calc(50% - 2.5px);
-    }
     & .player {
       display: flex;
       flex: 1 0 100%;

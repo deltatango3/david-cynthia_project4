@@ -145,6 +145,8 @@ async function getRosterAndGameData(id) {
 
 app.displayTeamRoster = (roster) => {
   //Sorting the roster by alphabetical order;
+  $('.chosen-team-page').removeClass('hide');
+  
   roster.sort(function (a, b) {
     let alc = a.person.fullName.toLowerCase(),
       blc = b.person.fullName.toLowerCase();
