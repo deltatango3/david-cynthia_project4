@@ -172,6 +172,10 @@ h1 {
 .player-season {
   font-weight: 600; }
 
+.teams {
+  font-size: 1.2rem;
+  font-family: "Open Sans", sans-serif; }
+
 body {
   background: #f1f7ed; }
 
@@ -330,7 +334,7 @@ nav {
 
 .teams {
   background-color: #fff;
-  flex: 0 0 90%;
+  flex: 0 0 98%;
   margin-top: -5rem;
   padding: 1rem; }
   .teams ul {
@@ -342,10 +346,11 @@ nav {
   align-items: center;
   display: flex;
   transition: all 300ms ease-in;
-  padding: 1rem .5rem 1rem 1rem; }
+  padding: 1rem 0; }
   @media (min-width: 600px) {
     .team-container {
-      flex-basis: 33%; } }
+      flex-basis: 33%;
+      padding: 1rem .5rem 1rem 1rem; } }
   @media (min-width: 800px) {
     .team-container {
       flex-basis: 25%; } }
