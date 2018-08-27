@@ -9,7 +9,6 @@ app.seasons = ['20172018', '20162017','20152016' ];
 app.alphabeticalRoster = [];
 app.chosenTeamName;
 app.currentSeason = '';
-app.seasonYear;
 
 app.ticketmasterApiURL = 'https://app.ticketmaster.com/discovery/v2/events.json';
 app.ticketmasterApiKey = 'AabmVbCHA2zPjQoA1lb98cN1NQyuFGF4';
@@ -261,7 +260,6 @@ app.getTeamID = () => {
     app.chosenTeamName = $(this).data('team-name');
     // app.getTeamRoster(id);
     getRosterAndGameData(teamID);
-    $('.menu-icon').toggleClass('open');
     // app.getGameData();
   })
 }
@@ -290,6 +288,10 @@ app.events = () => {
   app.getTeamID();
   app.getPlayerID();
   app.mobileNavToggle();
+
+  $('.nav-menu').on('click', '.team-container', function() {
+    $('.menu-icon').toggleClass('open');
+  })
 };
 
 app.init = () => {
